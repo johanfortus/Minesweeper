@@ -14,4 +14,6 @@ class Board {
     int totalMinesPlaced;
 public:
     Board(int columnAmount, int rowAmount, int mineAmount);
+    void countAdjacentMines();
+    void printBoard();
 };

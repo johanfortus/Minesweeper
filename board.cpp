@@ -25,7 +25,6 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
     while(totalMinesPlaced != mineAmount){
         int randomRow = Random::Int(0, rowAmount - 1);
         int randomCol = Random::Int(0, columnAmount - 1);
-
         if(boardVector[randomRow][randomCol] != "B"){
             boardVector[randomRow][randomCol] = "B";
             totalMinesPlaced++;
@@ -33,15 +32,17 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
         else{
             continue;
         }
-        cout << "[" << randomRow << "]" << "[" << randomCol << "]" << endl;
+        /*cout << "[" << randomRow << "]" << "[" << randomCol << "]" << endl;*/
     }
-    cout << endl;
+    /*cout << endl;*/
+}
 
+// Printing Board Out
+void Board::printBoard() {
     for(int i = 0; i < boardVector.size(); i++){
         for(int j = 0; j < boardVector[i].size(); j++){
             cout << boardVector[i][j] << " ";
         }
         cout << endl;
     }
-
 }
