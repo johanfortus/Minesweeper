@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 #include <cmath>
+#include "random.h"
 using namespace std;
 
 int main(){
@@ -35,9 +36,10 @@ int main(){
     int tileCount;
     tileCount = columns * rows;
     cout << "Tile Count: " << tileCount << endl;
-
     inFile.close();
 
+    cout << "Random Number: " << Random::Int(0, width) << endl;
+    cout << "Random Number: " << Random::Int(0, height) << endl;
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);

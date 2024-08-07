@@ -21,7 +21,11 @@ add_executable(Minesweeper ../main.cpp
         board.h
         board.cpp
         tile.h
-        tile.cpp)
+        tile.cpp
+        random.h
+        random.cpp
+        texturemanager.h
+        texturemanager.cpp)
 
 # Link SFML libraries
 target_link_libraries(Minesweeper sfml-system sfml-window sfml-graphics)

@@ -70,6 +70,20 @@ build CMakeFiles/Minesweeper.dir/tile.cpp.o: CXX_COMPILER__Minesweeper_unscanned
   OBJECT_DIR = CMakeFiles/Minesweeper.dir
   OBJECT_FILE_DIR = CMakeFiles/Minesweeper.dir
 
+build CMakeFiles/Minesweeper.dir/random.cpp.o: CXX_COMPILER__Minesweeper_unscanned_Debug /Users/johanfortus/CLionProjects/Minesweeper/random.cpp || cmake_object_order_depends_target_Minesweeper
+  DEP_FILE = CMakeFiles/Minesweeper.dir/random.cpp.o.d
+  FLAGS = -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fcolor-diagnostics
+  INCLUDES = -isystem /opt/homebrew/opt/sfml/include
+  OBJECT_DIR = CMakeFiles/Minesweeper.dir
+  OBJECT_FILE_DIR = CMakeFiles/Minesweeper.dir
+
+build CMakeFiles/Minesweeper.dir/texturemanager.cpp.o: CXX_COMPILER__Minesweeper_unscanned_Debug /Users/johanfortus/CLionProjects/Minesweeper/texturemanager.cpp || cmake_object_order_depends_target_Minesweeper
+  DEP_FILE = CMakeFiles/Minesweeper.dir/texturemanager.cpp.o.d
+  FLAGS = -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fcolor-diagnostics
+  INCLUDES = -isystem /opt/homebrew/opt/sfml/include
+  OBJECT_DIR = CMakeFiles/Minesweeper.dir
+  OBJECT_FILE_DIR = CMakeFiles/Minesweeper.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Minesweeper
@@ -78,7 +92,7 @@ build CMakeFiles/Minesweeper.dir/tile.cpp.o: CXX_COMPILER__Minesweeper_unscanned
 #############################################
 # Link the executable Minesweeper
 
-build Minesweeper: CXX_EXECUTABLE_LINKER__Minesweeper_Debug CMakeFiles/Minesweeper.dir/main.cpp.o CMakeFiles/Minesweeper.dir/board.cpp.o CMakeFiles/Minesweeper.dir/tile.cpp.o | /opt/homebrew/opt/sfml/lib/libsfml-graphics.2.6.1.dylib /opt/homebrew/opt/sfml/lib/libsfml-window.2.6.1.dylib /opt/homebrew/opt/sfml/lib/libsfml-system.2.6.1.dylib
+build Minesweeper: CXX_EXECUTABLE_LINKER__Minesweeper_Debug CMakeFiles/Minesweeper.dir/main.cpp.o CMakeFiles/Minesweeper.dir/board.cpp.o CMakeFiles/Minesweeper.dir/tile.cpp.o CMakeFiles/Minesweeper.dir/random.cpp.o CMakeFiles/Minesweeper.dir/texturemanager.cpp.o | /opt/homebrew/opt/sfml/lib/libsfml-graphics.2.6.1.dylib /opt/homebrew/opt/sfml/lib/libsfml-window.2.6.1.dylib /opt/homebrew/opt/sfml/lib/libsfml-system.2.6.1.dylib
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/sfml/lib  /opt/homebrew/opt/sfml/lib/libsfml-graphics.2.6.1.dylib  /opt/homebrew/opt/sfml/lib/libsfml-window.2.6.1.dylib  /opt/homebrew/opt/sfml/lib/libsfml-system.2.6.1.dylib
   OBJECT_DIR = CMakeFiles/Minesweeper.dir
