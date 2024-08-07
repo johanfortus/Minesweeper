@@ -20,7 +20,7 @@ void TextureManager::LoadTexture(string fileName) {
     // path == images/space.png
 }
 
-sf::Texture& TextureManager::GetTexture(string textureName){
+sf::Texture TextureManager::GetTexture(string textureName){
 
     // if the texture DOESN'T exist...
     if(textures.find(textureName) == textures.end())

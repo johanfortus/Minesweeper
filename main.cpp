@@ -47,9 +47,12 @@ int main(){
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
-//    unordered_map<string, sf::Texture> textures;
-//    textures["tile_hidden"].loadFromFile("tile_hidden");
+    // Two ways to load in a texture & create sprite
 
+    // Prof Fox
+//    sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
+
+    // Default
 //    sf::Texture tileHidden;
 //    tileHidden.loadFromFile("images/tile_hidden.png");
 //    sf::Sprite tileHiddenSprite(tileHidden);
