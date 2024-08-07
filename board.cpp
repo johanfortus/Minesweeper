@@ -43,5 +43,5 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
         }
         cout << endl;
     }
-    
+
 }
