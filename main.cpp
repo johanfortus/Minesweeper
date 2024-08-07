@@ -10,41 +10,9 @@
 #include "texturemanager.h"
 #include "board.h"
 using namespace std;
-
+void adjacent();
 int main(){
-    vector<vector<string>> myArray;
-    myArray = {
-            {"L", "•", "•", "B", "C"},
-            {"•", "B", "•", "•", "•"},
-            {"X", "X", "X", "X", "$"}};
-//    cout << myArray[0][0] << endl;
-
-    int bombCount = 0;
-    for(int i = 0; i < myArray.size(); i++){
-        for(int j = 0; j < myArray[i].size(); j++){
-
-
-            // Top Left Corner
-            if(i == 0 && j == 0){
-                if(myArray[i][j + 1] == "B")
-                    bombCount++;
-                if(myArray[i + 1][j + 1] == "B")
-                    bombCount++;
-                if(myArray[i + 1][j] == "B")
-                    bombCount++;
-                if(myArray[i + 1][j - 1] == "B")
-                    bombCount++;
-                if(myArray[i][j - 1] == "B")
-                    bombCount++;
-                if(myArray[i - 1][j - 1] == "B")
-                    bombCount++;
-                if(myArray[i - 1][j] == "B")
-                    bombCount++;
-                if(myArray[i - 1][j + 1] == "B")
-                    bombCount++;
-            }
-    }
-
+    void adjacent();
     return 0;
     ifstream inFile("config.cfg");
 
@@ -177,4 +145,41 @@ void test(){
         }
         cout << endl;
     }
+};
+
+void adjacent(){
+    vector<vector<string>> myArray;
+    myArray = {
+            {"L", "•", "•", "B", "C"},
+            {"•", "B", "•", "•", "•"},
+            {"X", "X", "X", "X", "$"}};
+//    cout << myArray[0][0] << endl;
+
+    int bombCount = 0;
+    for(int i = 0; i < myArray.size(); i++){
+        for(int j = 0; j < myArray[i].size(); j++){
+
+
+            // Top Left Corner
+            if(i == 0 && j == 0){
+                if(myArray[i][j + 1] == "B")
+                    bombCount++;
+                if(myArray[i + 1][j + 1] == "B")
+                    bombCount++;
+                if(myArray[i + 1][j] == "B")
+                    bombCount++;
+                if(myArray[i + 1][j - 1] == "B")
+                    bombCount++;
+                if(myArray[i][j - 1] == "B")
+                    bombCount++;
+                if(myArray[i - 1][j - 1] == "B")
+                    bombCount++;
+                if(myArray[i - 1][j] == "B")
+                    bombCount++;
+                if(myArray[i - 1][j + 1] == "B")
+                    bombCount++;
+            }
+        }
+    }
+    cout << "bombCount: " << bombCount << endl;
 }
