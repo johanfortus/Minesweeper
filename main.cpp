@@ -4,9 +4,10 @@
 #include <sstream>
 #include <vector>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <cmath>
 #include "random.h"
+#include "texturemanager.h"
 using namespace std;
 
 int main(){
@@ -37,13 +38,22 @@ int main(){
     tileCount = columns * rows;
     cout << "Tile Count: " << tileCount << endl;
     inFile.close();
+//
+//    cout << "Random Number: " << Random::Int(0, width) << endl;
+//    cout << "Random Number: " << Random::Int(0, height) << endl;
 
-    cout << "Random Number: " << Random::Int(0, width) << endl;
-    cout << "Random Number: " << Random::Int(0, height) << endl;
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
+
+//    unordered_map<string, sf::Texture> textures;
+//    textures["tile_hidden"].loadFromFile("tile_hidden");
+
+//    sf::Texture tileHidden;
+//    tileHidden.loadFromFile("images/tile_hidden.png");
+//    sf::Sprite tileHiddenSprite(tileHidden);
+
 
     while (window.isOpen())
     {

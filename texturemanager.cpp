@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <cmath>
 #include "texturemanager.h"
 using namespace std;
@@ -12,8 +12,8 @@ using namespace std;
 unordered_map<string, sf::Texture> TextureManager::textures;
 
 void TextureManager::LoadTexture(string fileName) {
-    string path = fileName + ".png";
-
+    string path = "images/" + fileName + ".png";
+    cout << path << endl;
     textures[fileName].loadFromFile(path);
 
     // fileName == space
