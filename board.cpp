@@ -46,3 +46,65 @@ void Board::printBoard() {
         cout << endl;
     }
 }
+
+
+void Board::countAdjacentMines() {
+    vector<vector<string>> myArray;
+    myArray = {
+            {"L", "•", "•", "B", "C"},
+            {"•", "B", "•", "•", "•"},
+            {"X", "X", "X", "X", "$"}};
+//    cout << myArray[0][0] << endl;
+
+    for(int i = 0; i < myArray.size(); i++){
+        for(int j = 0; j < myArray[i].size(); j++){
+
+
+            // Top Left Corner
+            if(i == 0 && j == 0){
+                cout << myArray[i][j];
+
+            }
+
+            // Top Right Corner
+            else if(i == 0 && j == myArray[i].size() - 1){
+                cout << myArray[i][j];
+            }
+
+            // Bottom Left Corner
+            else if(j == 0 && i == myArray.size() - 1){
+                cout << myArray[i][j];
+            }
+
+            // Bottom Right Corner
+            else if(j == myArray[i].size() - 1 && i == myArray.size() - 1){
+                cout << myArray[i][j];
+            }
+
+            // Top Edge
+            else if(i == 0){
+                cout << myArray[i][j];
+            }
+
+            // Bottom Edge
+            else if(i == myArray.size() - 1){
+                cout << myArray[i][j];
+            }
+
+            // Left Edge
+            else if(j == 0){
+                cout << myArray[i][j];
+            }
+
+            // Right Edge
+            else if(j == myArray[i].size() - 1){
+                cout << myArray[i][j];
+            }
+
+            else {
+                cout << myArray[i][j];
+            }
+        }
+        cout << endl;
+    }
+}
