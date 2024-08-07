@@ -10,7 +10,7 @@
 using namespace std;
 
 class Board {
-    vector<vector<int>> boardVector;
+    vector<vector<string>> boardVector;
     int totalMinesPlaced;
 public:
     Board(int columnAmount, int rowAmount, int mineAmount);
