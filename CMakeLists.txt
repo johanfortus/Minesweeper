@@ -17,7 +17,11 @@ find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
 # Include directories for SFML
 include_directories("/opt/homebrew/opt/sfml/include")
 
-add_executable(Minesweeper ../main.cpp)
+add_executable(Minesweeper ../main.cpp
+        board.h
+        board.cpp
+        tile.h
+        tile.cpp)
 
 # Link SFML libraries
 target_link_libraries(Minesweeper sfml-system sfml-window sfml-graphics)

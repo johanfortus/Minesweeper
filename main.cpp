@@ -14,41 +14,48 @@ int main(){
 
     string lineFromFile;
 
+    int columns;
     int width;
-    inFile >> width;
-    width = width * 32;
+    inFile >> columns;
+    width = columns * 32;
+    cout << "Columns: " << columns << endl;
     cout << "Width: " << width << endl;
 
+    int rows;
     int height;
-    inFile >> height;
-    height = (height * 32) + 100;
+    inFile >> rows;
+    height = (rows * 32) + 100;
+    cout << "Rows: " << rows << endl;
     cout << "Height: " << height << endl;
 
     int mineCount;
     inFile >> mineCount;
-    mineCount = mineCount * 16;
     cout << "Mine Count: " << mineCount << endl;
+
+    int tileCount;
+    tileCount = columns * rows;
+    cout << "Tile Count: " << tileCount << endl;
 
     inFile.close();
 
 
-//    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-//    sf::CircleShape shape(100.f);
-//    shape.setFillColor(sf::Color::Green);
-//
-//    while (window.isOpen())
-//    {
-//        sf::Event event;
-//        while (window.pollEvent(event))
-//        {
-//            if (event.type == sf::Event::Closed)
-//                window.close();
-//        }
-//
-//        window.clear();
-//        window.draw(shape);
-//        window.display();
-//    }
+    sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
 
     return 0;
 }
