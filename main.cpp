@@ -8,6 +8,7 @@
 #include <cmath>
 #include "random.h"
 #include "texturemanager.h"
+#include "board.h"
 using namespace std;
 
 int main(){
@@ -38,10 +39,11 @@ int main(){
     tileCount = columns * rows;
     cout << "Tile Count: " << tileCount << endl;
     inFile.close();
-//
-//    cout << "Random Number: " << Random::Int(0, width) << endl;
-//    cout << "Random Number: " << Random::Int(0, height) << endl;
 
+    cout << "Random Number: " << Random::Int(0, 200) << endl;
+    cout << "Random Number: " << Random::Int(0, 200) << endl;
+
+    Board board(columns, rows);
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);
@@ -49,6 +51,7 @@ int main(){
 
 
     sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
+    tileHiddenSprite.setPosition(sf::Vector2f(0,100));
 
 
 

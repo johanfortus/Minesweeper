@@ -10,6 +10,8 @@
 using namespace std;
 
 class Board {
+    vector<vector<int>> boardVector;
+
 public:
-    Board();
+    Board(int columnAmount, int rowAmount);
 };
