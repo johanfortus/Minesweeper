@@ -11,7 +11,7 @@ using namespace std;
 
 class Board {
     vector<vector<int>> boardVector;
-
+    int totalMinesPlaced;
 public:
-    Board(int columnAmount, int rowAmount);
+    Board(int columnAmount, int rowAmount, int mineAmount);
 };

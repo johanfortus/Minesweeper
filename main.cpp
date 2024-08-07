@@ -43,7 +43,7 @@ int main(){
     cout << "Random Number: " << Random::Int(0, 200) << endl;
     cout << "Random Number: " << Random::Int(0, 200) << endl;
 
-    Board board(columns, rows);
+    Board board(columns, rows, mineCount);
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);
