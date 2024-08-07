@@ -12,8 +12,7 @@
 using namespace std;
 void adjacent();
 int main(){
-    void adjacent();
-    return 0;
+
     ifstream inFile("config.cfg");
 
     string lineFromFile;
@@ -162,21 +161,21 @@ void adjacent(){
 
             // Top Left Corner
             if(i == 0 && j == 0){
-                if(myArray[i][j + 1] == "B")
+                if(myArray[i][j + 1] == "B") // Right
                     bombCount++;
-                if(myArray[i + 1][j + 1] == "B")
+                if(myArray[i + 1][j + 1] == "B") // Bottom Right
                     bombCount++;
-                if(myArray[i + 1][j] == "B")
+                if(myArray[i + 1][j] == "B") // Bottom
                     bombCount++;
-                if(myArray[i + 1][j - 1] == "B")
+                if(myArray[i + 1][j - 1] == "B") // Bottom Left
                     bombCount++;
-                if(myArray[i][j - 1] == "B")
+                if(myArray[i][j - 1] == "B") // Left
                     bombCount++;
-                if(myArray[i - 1][j - 1] == "B")
+                if(myArray[i - 1][j - 1] == "B") // Top Left
                     bombCount++;
-                if(myArray[i - 1][j] == "B")
+                if(myArray[i - 1][j] == "B") // Top
                     bombCount++;
-                if(myArray[i - 1][j + 1] == "B")
+                if(myArray[i - 1][j + 1] == "B") // Top Right
                     bombCount++;
             }
         }

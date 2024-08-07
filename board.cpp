@@ -59,11 +59,26 @@ void Board::countAdjacentMines() {
     for(int i = 0; i < myArray.size(); i++){
         for(int j = 0; j < myArray[i].size(); j++){
 
+            int bombCount;
 
             // Top Left Corner
             if(i == 0 && j == 0){
-                cout << myArray[i][j];
-
+                if(myArray[i][j + 1] == "B") // Right
+                    bombCount++;
+                if(myArray[i + 1][j + 1] == "B") // Bottom Right
+                    bombCount++;
+                if(myArray[i + 1][j] == "B") // Bottom
+                    bombCount++;
+                if(myArray[i + 1][j - 1] == "B") // Bottom Left
+                    bombCount++;
+                if(myArray[i][j - 1] == "B") // Left
+                    bombCount++;
+                if(myArray[i - 1][j - 1] == "B") // Top Left
+                    bombCount++;
+                if(myArray[i - 1][j] == "B") // Top
+                    bombCount++;
+                if(myArray[i - 1][j + 1] == "B") // Top Right
+                    bombCount++;
             }
 
             // Top Right Corner
