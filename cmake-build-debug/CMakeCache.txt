@@ -222,6 +222,9 @@ Minesweeper_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Minesweeper_SOURCE_DIR:STATIC=/Users/johanfortus/CLionProjects/Minesweeper
 
+//Path to a file.
+SFML_DOC_DIR:PATH=/opt/homebrew/share/doc/SFML
+
 
 ########################
 # INTERNAL cache entries

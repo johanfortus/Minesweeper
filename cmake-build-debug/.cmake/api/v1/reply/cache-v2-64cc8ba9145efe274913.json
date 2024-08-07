@@ -1152,6 +1152,18 @@
 			],
 			"type" : "STATIC",
 			"value" : "/Users/johanfortus/CLionProjects/Minesweeper"
+		},
+		{
+			"name" : "SFML_DOC_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a file."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/opt/homebrew/share/doc/SFML"
 		}
 	],
 	"kind" : "cache",

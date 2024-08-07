@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.28"
+						"string" : "3.0"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Minesweeper::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Minesweeper-Debug-be652395f7ba3b06da81.json",
+					"jsonFile" : "target-Minesweeper-Debug-014f6cdc20635069a577.json",
 					"name" : "Minesweeper",
 					"projectIndex" : 0
 				}
