@@ -12,6 +12,7 @@
 using namespace std;
 
 Board::Board(int columnAmount, int rowAmount, int mineAmount) {
+    totalMinesPlaced = 0;
 
     // Creating Board - 2D Vector
     for(unsigned int i = 0; i < rowAmount; i++) {

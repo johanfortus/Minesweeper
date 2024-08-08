@@ -15,33 +15,36 @@ using namespace std;
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
 
 int main(){
-
     ifstream inFile("config.cfg");
-
     string lineFromFile;
 
     int columns;
     int width;
     inFile >> columns;
     width = columns * 32;
-//    cout << "Columns: " << columns << endl;
-//    cout << "Width: " << width << endl;
 
     int rows;
     int height;
     inFile >> rows;
     height = (rows * 32) + 100;
-//    cout << "Rows: " << rows << endl;
-//    cout << "Height: " << height << endl;
 
     int mineCount;
     inFile >> mineCount;
-//    cout << "Mine Count: " << mineCount << endl;
 
     int tileCount;
     tileCount = columns * rows;
-//    cout << "Tile Count: " << tileCount << endl;
     inFile.close();
+
+    bool gameOver = false;
+    bool gameWon = false;
+
+    // Bottom Menu Buttons - height set to minus 100 instead of height minus 96 (32*3) bc it looks slightly better
+    sf::Vector2f smileyFaceBtnPos(width/2 - 32, height - 100);
+    sf::Vector2f debugBtnPos(width - 256, height - 100);
+    sf::Vector2f testOneBtnPos(width - 192, height - 100);
+    sf::Vector2f testTwoBtnPos(width - 128, height - 100);
+    sf::Vector2f testThreeBtnPos(width - 64, height - 100);
+
 
     Board board(columns, rows, mineCount);
     board.CountAdjacentMines();
@@ -49,53 +52,77 @@ int main(){
     vector<vector<Tile>> boardVector = board.GetBoardVector();
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
 
-
-//    sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
-//    tileHiddenSprite.setPosition(sf::Vector2f(0,32));
-
-    sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
-    tileRevealedSprite.setPosition(sf::Vector2f(0,0));
-
-    bool gameOver = false;
-    bool gameWon = false;
-
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-            if(!gameOver && !gameWon){
-                switch(event.type){
+
+            /*=== RESTART BUTTON FUNCTIONALITY ===*/
+            if(event.type == sf::Event::MouseButtonPressed) {
+                if(event.mouseButton.button == sf::Mouse::Left){
+                    if(event.mouseButton.x >= width / 2 - 32 && event.mouseButton.x <= width / 2 + 32 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        Board board(columns, rows, mineCount);
+                        board.CountAdjacentMines();
+                        board.PrintBoard();
+                        boardVector = board.GetBoardVector();
+                        gameOver = false;
+                        gameWon = false;
+                        cout << "Restart Successful" << endl;
+                    }
+                }
+            }
+
+            /*=== DEBUG BUTTON FUNCTIONALITY ===*/
+            if(event.type == sf::Event::MouseButtonPressed) {
+                if(event.mouseButton.button == sf::Mouse::Left){
+                    if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        cout << "DEBUG BUTTON CLICKED" << endl;
+                    }
+                }
+            }
+
+            /*=== Handling Mouse Click Events & Game Data ===*/
+            if(!gameOver && !gameWon) {
+                switch(event.type) {
                     case sf::Event::MouseButtonPressed:
                         int i, j;
+
+                        /* === LEFT CLICK === */
                         if(event.mouseButton.button == sf::Mouse::Left) {
-//                            cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
-//                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+                            cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
+                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
-                            if(boardVector[i][j].GetMineStatus()){
-                                gameOver = true;
-                                boardVector[i][j].SetRevealStatus(true);
-                            }
-                            else if(!boardVector[i][j].GetFlaggedStatus() && boardVector[i][j].GetTileData() != "0"){
-                                boardVector[i][j].SetRevealStatus(true);
-                            }
-                            else if(boardVector[i][j].GetTileData() == "0"){
-                                revealBlankTiles(i, j, columns, rows, boardVector);
+                            if(i >= 0 && i < rows && j >= 0 && j < columns) {
+
+                                // Left Click - If Tile is a Mine, reveal mine and set gameOver to true
+                                if(boardVector[i][j].GetMineStatus()){
+                                    gameOver = true;
+                                    boardVector[i][j].SetRevealStatus(true);
+                                }
+
+                                    // Left Click - If Tile is not a blank tile, reveal
+                                else if(!boardVector[i][j].GetFlaggedStatus() && boardVector[i][j].GetTileData() != "0"){
+                                    boardVector[i][j].SetRevealStatus(true);
+                                }
+
+                                    // Left Click - If Tile is a blank tile, recursive function is called to reveal neighboring blank tiles
+                                else if(boardVector[i][j].GetTileData() == "0"){
+                                    revealBlankTiles(i, j, columns, rows, boardVector);
+                                }
                             }
                         }
+
+                        /* === RIGHT CLICK === */
                         else if(event.mouseButton.button == sf::Mouse::Right) {
 //                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
-                            // Right Clicking On Tile - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
+                            // Right Click - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
                             if(!boardVector[i][j].GetFlaggedStatus())
                                 boardVector[i][j].SetFlaggedStatus(true);
                             else
@@ -106,14 +133,19 @@ int main(){
             }
         }
         window.clear(sf::Color::White);
+
+        /*=== Draw Sprites Based on Game Data ===*/
         for(int i = 0; i < boardVector.size(); i++){
             for(int j = 0; j < boardVector[i].size(); j++){
 
+                // Set all mine tiles reveal status to true if game is over
                 if(gameOver) {
                     if(boardVector[i][j].GetMineStatus()){
                         boardVector[i][j].SetRevealStatus(true);
                     }
                 }
+
+                // Set all mine tiles flagged status to true if game is won
                 if(gameWon){
                     if(!boardVector[i][j].GetRevealStatus()){
                         boardVector[i][j].SetFlaggedStatus(true);
@@ -164,37 +196,37 @@ int main(){
 
         // Draw Test #3 Button
         sf::Sprite testThreeBtn(TextureManager::GetTexture("test_3"));
-        testThreeBtn.setPosition(sf::Vector2f(width - 64, height - 100)); // instead of height - 96 bc it looks slightly better
+        testThreeBtn.setPosition(testThreeBtnPos);
         window.draw(testThreeBtn);
 
         // Draw Test #2 Button
         sf::Sprite testTwoBtn(TextureManager::GetTexture("test_2"));
-        testTwoBtn.setPosition(sf::Vector2f(width - 128, height - 100));
+        testTwoBtn.setPosition(testTwoBtnPos);
         window.draw(testTwoBtn);
 
         // Draw Test #1 Button
         sf::Sprite testOneBtn(TextureManager::GetTexture("test_1"));
-        testOneBtn.setPosition(sf::Vector2f(width - 192, height - 100));
+        testOneBtn.setPosition(testOneBtnPos);
         window.draw(testOneBtn);
 
         // Draw Debug Button
         sf::Sprite debugBtn(TextureManager::GetTexture("debug"));
-        debugBtn.setPosition(sf::Vector2f(width - 256, height - 100));
+        debugBtn.setPosition(debugBtnPos);
         window.draw(debugBtn);
 
         // Draw Smiley Face Button
         sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
-        SmileyFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
+        SmileyFaceButton.setPosition(smileyFaceBtnPos);
         window.draw(SmileyFaceButton);
 
         // Check Game Loss
         if(gameOver){
             sf::Sprite SadFaceButton(TextureManager::GetTexture("face_lose"));
-            SadFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
+            SadFaceButton.setPosition(smileyFaceBtnPos);
             window.draw(SadFaceButton);
         }
 
-        // Check Game Won
+        // Check Game Won - If revealed tiles amount matches tileCount minus mineCount
         if(gameWon){
             sf::Sprite WinningFaceButton(TextureManager::GetTexture("face_win"));
             WinningFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
@@ -210,10 +242,6 @@ int main(){
         if(revealedTileCount == tileCount - mineCount){
             gameWon = true;
         }
-
-
-
-
         window.display();
     }
     TextureManager::Clear();
@@ -221,6 +249,7 @@ int main(){
     return 0;
 }
 
+// Recursive reveal neighboring tiles function
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector) {
 
     // BASE CASE
