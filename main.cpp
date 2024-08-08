@@ -82,6 +82,10 @@ int main(){
                 if(event.mouseButton.button == sf::Mouse::Left){
                     if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "DEBUG BUTTON CLICKED" << endl;
+                        if(debugMode)
+                            debugMode = false;
+                        else
+                            debugMode = true;
                     }
                 }
             }
@@ -191,6 +195,15 @@ int main(){
                         sf::Sprite tileFlaggedSprite(TextureManager::GetTexture("flag"));
                         tileFlaggedSprite.setPosition(sf::Vector2f(j * 32,i * 32));
                         window.draw(tileFlaggedSprite);
+                    }
+                }
+
+                // Debug Mode
+                if(debugMode){
+                    if(boardVector[i][j].GetMineStatus()){
+                        sf::Sprite tileMineSprite(TextureManager::GetTexture("mine"));
+                        tileMineSprite.setPosition(sf::Vector2f(j * 32,i * 32));
+                        window.draw(tileMineSprite);
                     }
                 }
 
