@@ -307,6 +307,7 @@ int main(){
         window.draw(SmileyFaceButton);
 
         // Draw Counter
+
         window.draw(digitSprites["0"]);
         window.draw(digitSprites["1"]);
 
@@ -399,42 +400,48 @@ void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fi
 // CHANGE POSITION WHILE CHECKING STRING FLAG COUNT INDEX
 // rectLeft is for cropping purposes - position the number is on the texture
 void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height){
-    cout << "Loading Digit Textures" << endl;
     // Hard Coded Values Based On Digits Texture - 231x32
     // Rectangle Width is 21, due to 11 values
-    int rectWidth = 21;
     int rectLeft = 0;
+    for(int i = 0; i < 11; i++){
+        sf::Sprite digit(TextureManager::GetTexture("digits"));
+        sf::IntRect rectDigit(rectLeft, 0, 21, 32);
+        digit.setTextureRect(rectDigit);
+        if(i == 10)
+            digitSprites["-"] = digit;
+        else
+            digitSprites[to_string(i)] = digit;
+        rectLeft+=21;
+    }
+}
 
-    // -
+//cout << "Loading Digit Textures" << endl;
+// Hard Coded Values Based On Digits Texture - 231x32
+// Rectangle Width is 21, due to 11 values
+//int rectWidth = 21;
+//int rectLeft = 0;
+
+// -
 //    sf::Sprite negSign(TextureManager::GetTexture("digits"));
 //    sf::IntRect rectNegSign(210, 0, rectWidth, 32);
 //    negSign.setTextureRect(rectNegSign);
 //    negSign.setPosition(width - width, height - 100);
 //    digitSprites["-"] = negSign;
 
-    // 0
+// 0
 //    sf::Sprite zero(TextureManager::GetTexture("digits"));
 //    sf::IntRect rectZero(0, 0, rectWidth, 32);
 //    zero.setTextureRect(rectZero);
 //    zero.setPosition(width - width, height - 100);
 //    digitSprites["0"] = zero;
 
-    // 1
+// 1
 //    sf::Sprite one(TextureManager::GetTexture("digits"));
 //    sf::IntRect rectOne(21, 0, 21, 32);
 //    one.setTextureRect(rectOne);
 //    one.setPosition(width - width + 16, height - 100);
 //    digitSprites["1"] = one;
 
-    int num = -4;
-    string stringNum = to_string(num);
-    cout << stringNum[0] << endl;
-
-    for(int i = 0; i < 11; i++){
-        sf::Sprite digit(TextureManager::GetTexture("digits"));
-        if(i == 10)
-            digitSprites["-"] = digit;
-        else
-            digitSprites[to_string(i)] = digit;
-    }
-}
+//int num = -4;
+//string stringNum = to_string(num);
+//cout << stringNum[0] << endl;
