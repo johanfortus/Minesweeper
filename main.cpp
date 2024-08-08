@@ -390,11 +390,14 @@ void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fi
     }
 }
 
+// CHANGE POSITION WHILE CHECKING STRING FLAG COUNT INDEX
+// rectLeft is for cropping purposes - position the number is on the texture
 void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height){
     cout << "Loading Digit Textures" << endl;
     // Hard Coded Values Based On Digits Texture - 231x32
     // Rectangle Width is 21, due to 11 values
     int rectWidth = 21;
+    int rectLeft = 0;
 
     // -
     sf::Sprite negSign(TextureManager::GetTexture("digits"));
@@ -417,24 +420,15 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
     one.setPosition(width - width + 16, height - 100);
     digitSprites["1"] = one;
 
-    // 2
-    sf::Sprite two(TextureManager::GetTexture("digits"));
-    sf::IntRect rectTwo(42, 0, 21, 32);
-    two.setTextureRect(rectTwo);
-    two.setPosition(width - width + 16, height - 100);
-    digitSprites["2"] = two;
+    int num = -4;
+    string stringNum = to_string(num);
+    cout << stringNum[0] << endl;
 
-    for(int i = 0; i < 10; i++){
-        cout << i << endl;
-        int xPos = width - width;
-        int yPos = height - 100;
+    for(int i = 0; i < 11; i++){
+        sf::Sprite digit(TextureManager::GetTexture("digits"));
+        if(i == 10)
+            digitSprites["-"] = digit;
+        else
+            digitSprites[to_string(i)] = digit;
     }
-
-//    sf::Sprite INSERT(TextureManager::GetTexture("digits"));
-//    sf::IntRect RECTINSERT(21, 0, 21, 32);
-//    INSERT.setTextureRect(RECTINSERT);
-//    INSERT.setPosition(width - width + 16, height - 100);
-//    digitSprites["1"] = INSERT;
-
-
 }
