@@ -45,9 +45,9 @@ int main(){
     cout << "Random Number: " << Random::Int(0, 200) << endl;
 
     Board board(columns, rows, mineCount);
-    board.countAdjacentMines();
-    board.printBoard();
-    vector<vector<Tile>> boardVector = board.getBoardVector();
+    board.CountAdjacentMines();
+    board.PrintBoard();
+    vector<vector<Tile>> boardVector = board.GetBoardVector();
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);
@@ -73,13 +73,24 @@ int main(){
                 window.close();
         }
 
-        window.clear();
+        window.clear(sf::Color::White);
         for(int i = 0; i < boardVector.size(); i++){
             for(int j = 0; j < boardVector[i].size(); j++){
-                Tile tile(i, j);
-                sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
-                tileRevealedSprite.setPosition(sf::Vector2f(j * 32,i * 32));
-                window.draw(tileRevealedSprite);
+
+                // If Tile is revealed
+                if(boardVector[i][j].GetRevealStatus()){
+                    // Draw Revealed Tile Sprite
+                    sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
+                    tileRevealedSprite.setPosition(sf::Vector2f(j * 32,i * 32));
+                    window.draw(tileRevealedSprite);
+                }
+
+                // If Tile is hidden
+                else{
+                    sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
+                    tileHiddenSprite.setPosition(sf::Vector2f(j * 32,i * 32));
+                    window.draw(tileHiddenSprite);
+                }
             }
         }
 

@@ -16,7 +16,7 @@ class Board {
     int totalMinesPlaced;
 public:
     Board(int columnAmount, int rowAmount, int mineAmount);
-    void countAdjacentMines();
-    void printBoard();
-    vector<vector<Tile>> getBoardVector();
+    void CountAdjacentMines();
+    void PrintBoard();
+    vector<vector<Tile>> GetBoardVector();
 };

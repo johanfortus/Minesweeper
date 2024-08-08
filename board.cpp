@@ -29,6 +29,7 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
         int randomCol = Random::Int(0, columnAmount - 1);
         if(boardVector[randomRow][randomCol].GetTileData() != "B"){
             boardVector[randomRow][randomCol].SetTileData("B");
+            boardVector[randomRow][randomCol].SetMineStatus(true);
             totalMinesPlaced++;
         }
         else{
@@ -40,7 +41,7 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
 }
 
 // Printing Board Out
-void Board::printBoard() {
+void Board::PrintBoard() {
     for(int i = 0; i < boardVector.size(); i++){
         for(int j = 0; j < boardVector[i].size(); j++){
             cout << boardVector[i][j].GetTileData() << " ";
@@ -50,7 +51,7 @@ void Board::printBoard() {
 }
 
 // Yes I am aware this code is severely violating the DRY principle
-void Board::countAdjacentMines() {
+void Board::CountAdjacentMines() {
 
     for(int i = 0; i < boardVector.size(); i++){
         for(int j = 0; j < boardVector[i].size(); j++){
@@ -176,12 +177,11 @@ void Board::countAdjacentMines() {
                 if(bombCount > 0)
                     boardVector[i][j].SetTileData(to_string(bombCount));
             }
-
         }
         cout << endl;
     }
 }
 
-vector<vector<Tile>> Board::getBoardVector(){
+vector<vector<Tile>> Board::GetBoardVector(){
     return boardVector;
 }
