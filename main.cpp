@@ -90,6 +90,33 @@ int main(){
                 }
             }
 
+            /*=== TEST ONE BUTTON FUNCTIONALITY ===*/
+            if(event.type == sf::Event::MouseButtonPressed) {
+                if(event.mouseButton.button == sf::Mouse::Left){
+                    if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        cout << "TEST ONE BUTTON CLICKED" << endl;
+                    }
+                }
+            }
+
+            /*=== TEST TWO BUTTON FUNCTIONALITY ===*/
+            if(event.type == sf::Event::MouseButtonPressed) {
+                if(event.mouseButton.button == sf::Mouse::Left){
+                    if(event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        cout << "TEST TWO BUTTON CLICKED" << endl;
+                    }
+                }
+            }
+
+            /*=== TEST TWO THREE FUNCTIONALITY ===*/
+            if(event.type == sf::Event::MouseButtonPressed) {
+                if(event.mouseButton.button == sf::Mouse::Left){
+                    if(event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        cout << "TEST THREE BUTTON CLICKED" << endl;
+                    }
+                }
+            }
+
             /*=== Handling Mouse Click Events & Game Data ===*/
             if(!gameOver && !gameWon) {
                 switch(event.type) {
