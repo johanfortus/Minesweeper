@@ -71,6 +71,11 @@ int main(){
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            switch(event.type){
+                case sf::Event::MouseButtonPressed:
+                    if(event.mouseButton.button == sf::Mouse::Left)
+                        cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
+            }
         }
 
         window.clear(sf::Color::White);
@@ -93,15 +98,13 @@ int main(){
                     }
 
                     // If Tile Is a Number, Draw Number Sprite
-                    else if(boardVector[i][j].GetNumberStatus()){
-                        string numberData = boardVector[i][j].GetNumberData();
+                    else if(boardVector[i][j].GetTileData() != "0"){
+                        string numberData = boardVector[i][j].GetTileData();
                         string numberTextureName = "number_" + numberData;
-
                         sf::Sprite tileNumberDataSprite(TextureManager::GetTexture(numberTextureName));
                         tileNumberDataSprite.setPosition(sf::Vector2f(j * 32,i * 32));
                         window.draw(tileNumberDataSprite);
                     }
-
                 }
 
                 // If Tile is hidden
@@ -112,7 +115,12 @@ int main(){
                 }
             }
         }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
 
+
+
+        }
         window.display();
     }
     TextureManager::Clear();
