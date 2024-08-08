@@ -58,9 +58,17 @@ int main(){
     board.PrintBoard();
     vector<vector<Tile>> boardVector = board.GetBoardVector();
 
-    unordered_map<string, sf::Texture> digitTextures;
-    loadDigitTextures(digitTextures);
+//    unordered_map<string, sf::Texture> digitTextures;
+//    loadDigitTextures(digitTextures);
 
+    unordered_map<string, sf::Sprite> digitSprites;
+    sf::Sprite negSign(TextureManager::GetTexture("digits"));
+//    sf::Sprite digitOne(digitTextures["one"]);
+//        digitOne.setPosition(width - width + 32, height - 100);
+    sf::IntRect rectNegSign(208, 0, 32, 32);
+    negSign.setTextureRect(rectNegSign);
+    negSign.setPosition(width - width, height - 100);
+    digitSprites["-"] = negSign;
 
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
@@ -301,14 +309,15 @@ int main(){
         window.draw(SmileyFaceButton);
 
         // Draw Counter
-        sf::Sprite negSign(digitTextures["-"]);
-        sf::Sprite digitOne(digitTextures["one"]);
+//        sf::Sprite negSign(digitTextures["-"]);
+//        sf::Sprite digitOne(digitTextures["one"]);
 //        digitOne.setPosition(width - width + 32, height - 100);
-        sf::IntRect rectNegSign(32, 0, 32, 16);
-        negSign.setTextureRect(rectNegSign);
-
-        negSign.setPosition(width - width, height - 100);
-        window.draw(negSign);
+//        sf::IntRect rectNegSign(208, 0, 32, 32);
+//        negSign.setTextureRect(rectNegSign);
+//
+//        negSign.setPosition(width - width, height - 100);
+//        window.draw(negSign);
+        window.draw(digitSprites["-"]);
 
         // Check Game Loss
         if(gameOver){
