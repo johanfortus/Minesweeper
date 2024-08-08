@@ -93,17 +93,34 @@ int main(){
                 }
             }
 
-            /*=== TEST ONE BUTTON FUNCTIONALITY ===*/
+            /*=== TEST BUTTONS FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
-                    string testOneFileName = "testboard1.brd";
-                    string testTwoFileName = "testboard2.brd";
-                    string testThreeFileName = "testboard3.brd";
 
                     // Test One Button
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST ONE BUTTON CLICKED" << endl;
-                        testFileLayout(boardVector, mineCount, testOneFileName);
+                        testFileLayout(boardVector, mineCount, "testboard1.brd");
+                        board.UpdateBoard(boardVector);
+                        board.CountAdjacentMines();
+                        board.PrintBoard();
+                        boardVector = board.GetBoardVector();
+                    }
+
+                    // Test Two Button
+                    else if(event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        cout << "TEST TWO BUTTON CLICKED" << endl;
+                        testFileLayout(boardVector, mineCount, "testboard2.brd");
+                        board.UpdateBoard(boardVector);
+                        board.CountAdjacentMines();
+                        board.PrintBoard();
+                        boardVector = board.GetBoardVector();
+                    }
+
+                    // Test Three Button
+                    else if(event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        cout << "TEST THREE BUTTON CLICKED" << endl;
+                        testFileLayout(boardVector, mineCount, "testboard3.brd");
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -307,7 +324,7 @@ int main(){
 }
 
 void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName){
-    ifstream testFile("testboard1.brd");
+    ifstream testFile(fileName);
     string line;
     mineCount = 0;
 
