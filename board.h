@@ -7,10 +7,12 @@
 #include <string>
 #include <map>
 #include <cmath>
+#include "tile.h"
 using namespace std;
 
 class Board {
     vector<vector<string>> boardVector;
+
     int totalMinesPlaced;
 public:
     Board(int columnAmount, int rowAmount, int mineAmount);

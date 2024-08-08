@@ -9,6 +9,7 @@
 #include "random.h"
 #include "texturemanager.h"
 #include "board.h"
+#include "tile.h"
 using namespace std;
 void adjacent();
 int main(){
@@ -75,7 +76,7 @@ int main(){
         window.clear();
         for(int i = 0; i < boardVector.size(); i++){
             for(int j = 0; j < boardVector[i].size(); j++){
-
+                Tile tile(i, j);
                 sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
                 tileRevealedSprite.setPosition(sf::Vector2f(j * 32,i * 32));
                 window.draw(tileRevealedSprite);

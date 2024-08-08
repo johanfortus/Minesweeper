@@ -10,6 +10,7 @@
 using namespace std;
 
 class Tile {
+    string TileData;
 public:
-    Tile(int i, int j);
+    Tile();
 };
