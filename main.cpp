@@ -15,7 +15,7 @@ using namespace std;
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
 void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
 void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height);
-void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, int prevFlaggedMines, sf::RenderWindow& window);
+void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window);
 
 int main(){
     ifstream inFile("config.cfg");
@@ -35,7 +35,6 @@ int main(){
     int mineCount;
     inFile >> mineCount;
     int flaggedMines = mineCount;
-    int prevFlaggedMines = flaggedMines;
     int originalMineCount = mineCount; // mineCount may be updated due to testing purposes
 
     int tileCount;
@@ -79,7 +78,6 @@ int main(){
                     if(event.mouseButton.x >= width / 2 - 32 && event.mouseButton.x <= width / 2 + 32 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         mineCount = originalMineCount;
                         flaggedMines = mineCount;
-                        prevFlaggedMines = flaggedMines;
                         Board board(columns, rows, mineCount);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -115,7 +113,6 @@ int main(){
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard1.brd");
                         flaggedMines = mineCount;
-                        prevFlaggedMines = flaggedMines;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -133,7 +130,6 @@ int main(){
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard2.brd");
                         flaggedMines = mineCount;
-                        prevFlaggedMines = flaggedMines;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -151,7 +147,6 @@ int main(){
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard3.brd");
                         flaggedMines = mineCount;
-                        prevFlaggedMines = flaggedMines;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -313,10 +308,7 @@ int main(){
         window.draw(SmileyFaceButton);
 
         // Draw Counter
-        drawCounter(digitSprites, flaggedMines, prevFlaggedMines, window);
-        if(flaggedMines != prevFlaggedMines){
-            cout << "yo" << endl;
-        }
+        drawCounter(digitSprites, flaggedMines, window);
 
         // Check Game Loss
         if(gameOver){
@@ -341,8 +333,6 @@ int main(){
         if(revealedTileCount == tileCount - mineCount){
             gameWon = true;
         }
-
-        prevFlaggedMines = flaggedMines;
 
         window.display();
     }
@@ -425,9 +415,14 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
 }
 
 // CHANGE X POSITION WHILE CHECKING STRING FLAG COUNT INDEX
-void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, int prevFlaggedMines, sf::RenderWindow& window) {
-
-
+void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window) {
+    string digitString;
+    if(flaggedMines < 100){
+        digitString = "0" + to_string(flaggedMines);
+    }
+    cout << "Digit String: " << digitString << endl;
+    window.draw(digitSprites["6"]);
+//    cout << to_string(flaggedMines).size() << endl;
 }
 
 //cout << "Loading Digit Textures" << endl;
