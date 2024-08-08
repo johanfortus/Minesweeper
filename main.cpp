@@ -81,6 +81,7 @@ int main(){
                         j = floor(event.mouseButton.x / 32);
 
                         // Left Clicking On Tile - Reveal Tile (boardVector[i][j]) if not flagged
+//                        cout << "Adjacent Mines: " << boardVector[i][j].GetTo
                         if(!boardVector[i][j].GetFlaggedStatus())
                             boardVector[i][j].SetRevealStatus(true);
 
@@ -176,14 +177,14 @@ int main(){
     }
     TextureManager::Clear();
 
-    if(i < 0 || i > columns - 1){
-        return;
-    if(j < 0 || j > rows - 1){
-        return;
-    if(boardVector[i][j].GetRevealStatus()){
-        return;
-    boardVector[i][j].SetRevealStatus(true);
-    int adjacentMines = 0;
+//    if(i < 0 || i > columns - 1){
+//        return;
+//    if(j < 0 || j > rows - 1){
+//        return;
+//    if(boardVector[i][j].GetRevealStatus()){
+//        return;
+//    boardVector[i][j].SetRevealStatus(true);
+//    int adjacentMines = 0;
 
 
 
