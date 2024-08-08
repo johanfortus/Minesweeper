@@ -13,7 +13,7 @@
 using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
-void GameOver();
+
 int main(){
 
     ifstream inFile("config.cfg");
@@ -24,27 +24,24 @@ int main(){
     int width;
     inFile >> columns;
     width = columns * 32;
-    cout << "Columns: " << columns << endl;
-    cout << "Width: " << width << endl;
+//    cout << "Columns: " << columns << endl;
+//    cout << "Width: " << width << endl;
 
     int rows;
     int height;
     inFile >> rows;
     height = (rows * 32) + 100;
-    cout << "Rows: " << rows << endl;
-    cout << "Height: " << height << endl;
+//    cout << "Rows: " << rows << endl;
+//    cout << "Height: " << height << endl;
 
     int mineCount;
     inFile >> mineCount;
-    cout << "Mine Count: " << mineCount << endl;
+//    cout << "Mine Count: " << mineCount << endl;
 
     int tileCount;
     tileCount = columns * rows;
-    cout << "Tile Count: " << tileCount << endl;
+//    cout << "Tile Count: " << tileCount << endl;
     inFile.close();
-
-    cout << "Random Number: " << Random::Int(0, 200) << endl;
-    cout << "Random Number: " << Random::Int(0, 200) << endl;
 
     Board board(columns, rows, mineCount);
     board.CountAdjacentMines();
@@ -63,6 +60,7 @@ int main(){
     tileRevealedSprite.setPosition(sf::Vector2f(0,0));
 
     bool gameOver = false;
+    bool gameWon = false;
 
     while (window.isOpen())
     {
@@ -71,13 +69,13 @@ int main(){
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            if(!gameOver){
+            if(!gameOver && !gameWon){
                 switch(event.type){
                     case sf::Event::MouseButtonPressed:
                         int i, j;
                         if(event.mouseButton.button == sf::Mouse::Left) {
-                            cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
-                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+//                            cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
+//                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
@@ -85,15 +83,15 @@ int main(){
                                 gameOver = true;
                                 boardVector[i][j].SetRevealStatus(true);
                             }
+                            else if(!boardVector[i][j].GetFlaggedStatus() && boardVector[i][j].GetTileData() != "0"){
+                                boardVector[i][j].SetRevealStatus(true);
+                            }
                             else if(boardVector[i][j].GetTileData() == "0"){
                                 revealBlankTiles(i, j, columns, rows, boardVector);
                             }
-                            else if(!boardVector[i][j].GetFlaggedStatus()){
-                                boardVector[i][j].SetRevealStatus(true);
-                            }
                         }
                         else if(event.mouseButton.button == sf::Mouse::Right) {
-                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+//                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
@@ -116,7 +114,11 @@ int main(){
                         boardVector[i][j].SetRevealStatus(true);
                     }
                 }
-
+                if(gameWon){
+                    if(!boardVector[i][j].GetRevealStatus()){
+                        boardVector[i][j].SetFlaggedStatus(true);
+                    }
+                }
 
                 // If Tile is revealed
                 if(boardVector[i][j].GetRevealStatus()){
@@ -185,11 +187,30 @@ int main(){
         SmileyFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
         window.draw(SmileyFaceButton);
 
+        // Check Game Loss
         if(gameOver){
             sf::Sprite SadFaceButton(TextureManager::GetTexture("face_lose"));
             SadFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
             window.draw(SadFaceButton);
         }
+
+        // Check Game Won
+        if(gameWon){
+            sf::Sprite WinningFaceButton(TextureManager::GetTexture("face_win"));
+            WinningFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
+            window.draw(WinningFaceButton);
+        }
+        int revealedTileCount = 0;
+        for(int i = 0; i < boardVector.size(); i++){
+            for(int j = 0; j < boardVector[i].size(); j++) {
+                if(boardVector[i][j].GetRevealStatus())
+                    revealedTileCount++;
+            }
+        }
+        if(revealedTileCount == tileCount - mineCount){
+            gameWon = true;
+        }
+
 
 
 

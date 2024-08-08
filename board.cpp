@@ -178,7 +178,7 @@ void Board::CountAdjacentMines() {
                 boardVector[i][j].SetTileData(to_string(bombCount));
             }
         }
-        cout << endl;
+//        cout << endl;
     }
 }
 
