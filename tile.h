@@ -19,15 +19,13 @@ class Tile {
     string numberData = "";
 
     bool mine = false;
-    bool revealed = true;
+    bool revealed = false;
     bool flagged = false;
     bool numbered = false;
 public:
     Tile(int i, int j);
     string GetTileData();
     void SetTileData(string newTileData);
-    string GetNumberData();
-    void SetNumberData(string newNumberData);
 
     bool GetMineStatus();
     void SetMineStatus(bool mineStatus);

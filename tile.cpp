@@ -27,14 +27,6 @@ void Tile::SetTileData(string newTileData) {
     tileData = newTileData;
 }
 
-string Tile::GetNumberData() {
-    return numberData;
-}
-void Tile::SetNumberData(string newNumberData) {
-    numberData = newNumberData;
-}
-
-
 
 
 

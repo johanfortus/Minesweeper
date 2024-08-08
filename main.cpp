@@ -73,8 +73,21 @@ int main(){
                 window.close();
             switch(event.type){
                 case sf::Event::MouseButtonPressed:
-                    if(event.mouseButton.button == sf::Mouse::Left)
+                    int i, j;
+                    if(event.mouseButton.button == sf::Mouse::Left) {
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+                        i = floor(event.mouseButton.y / 32);
+                        j = floor(event.mouseButton.x / 32);
+                        if(!boardVector[i][j].GetFlaggedStatus())
+                            boardVector[i][j].SetRevealStatus(true);
+                    }
+                    else if(event.mouseButton.button == sf::Mouse::Right) {
+                        cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+                        i = floor(event.mouseButton.y / 32);
+                        j = floor(event.mouseButton.x / 32);
+                        boardVector[i][j].SetFlaggedStatus(true);
+                    }
+                    break;
             }
         }
         window.clear(sf::Color::White);
@@ -111,14 +124,16 @@ int main(){
                     sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
                     tileHiddenSprite.setPosition(sf::Vector2f(j * 32,i * 32));
                     window.draw(tileHiddenSprite);
+
+                    // If Tile is Flagged
+                    if(boardVector[i][j].GetFlaggedStatus()) {
+                        sf::Sprite tileFlaggedSprite(TextureManager::GetTexture("flag"));
+                        tileFlaggedSprite.setPosition(sf::Vector2f(j * 32,i * 32));
+                        window.draw(tileFlaggedSprite);
+                    }
                 }
+
             }
-        }
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        {
-
-
-
         }
         window.display();
     }
