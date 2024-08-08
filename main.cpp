@@ -301,8 +301,14 @@ int main(){
         window.draw(SmileyFaceButton);
 
         // Draw Counter
+        sf::Sprite negSign(digitTextures["-"]);
         sf::Sprite digitOne(digitTextures["one"]);
-        window.draw(digitOne);
+//        digitOne.setPosition(width - width + 32, height - 100);
+        sf::IntRect rectNegSign(32, 0, 32, 16);
+        negSign.setTextureRect(rectNegSign);
+
+        negSign.setPosition(width - width, height - 100);
+        window.draw(negSign);
 
         // Check Game Loss
         if(gameOver){
@@ -392,7 +398,8 @@ void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fi
 
 void loadDigitTextures(unordered_map<string, sf::Texture>& digitTextures){
     cout << "Loading Digit Textures" << endl;
-//    sf::Sprite digitOne(TextureManager::GetTexture("digits"));
+//    TextureManager::GetTexture("digits"));
     digitTextures["one"].loadFromFile("images/digits.png");
+    digitTextures["-"].loadFromFile("images/digits.png");
 
 }
