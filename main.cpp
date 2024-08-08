@@ -79,6 +79,8 @@ int main(){
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                         i = floor(event.mouseButton.y / 32);
                         j = floor(event.mouseButton.x / 32);
+
+                        // Left Clicking On Tile - Reveal Tile (boardVector[i][j]) if not flagged
                         if(!boardVector[i][j].GetFlaggedStatus())
                             boardVector[i][j].SetRevealStatus(true);
                     }
@@ -86,6 +88,8 @@ int main(){
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                         i = floor(event.mouseButton.y / 32);
                         j = floor(event.mouseButton.x / 32);
+
+                        // Right Clicking On Tile - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
                         if(!boardVector[i][j].GetFlaggedStatus())
                             boardVector[i][j].SetFlaggedStatus(true);
                         else
@@ -154,6 +158,11 @@ int main(){
         sf::Sprite testOneBtn(TextureManager::GetTexture("test_1"));
         testOneBtn.setPosition(sf::Vector2f(width - 192, height - 100));
         window.draw(testOneBtn);
+
+        // Draw Debug Button
+        sf::Sprite debugBtn(TextureManager::GetTexture("debug"));
+        debugBtn.setPosition(sf::Vector2f(width - 256, height - 100));
+        window.draw(debugBtn);
 
         // Draw Smiley Face Button
         sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));

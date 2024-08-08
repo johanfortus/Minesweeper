@@ -13,7 +13,7 @@ unordered_map<string, sf::Texture> TextureManager::textures;
 
 void TextureManager::LoadTexture(string fileName) {
     string path = "images/" + fileName + ".png";
-    cout << path << endl;
+//    cout << path << endl;
     textures[fileName].loadFromFile(path);
 
     // fileName == space
