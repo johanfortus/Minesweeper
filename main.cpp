@@ -145,6 +145,12 @@ int main(){
         testThreeBtn.setPosition(sf::Vector2f(width - 64, height - 100)); // instead of height - 96 bc it looks slightly better
         window.draw(testThreeBtn);
 
+        // Draw Test #2 Button
+        sf::Sprite testTwoBtn(TextureManager::GetTexture("test_2"));
+        testTwoBtn.setPosition(sf::Vector2f(width - 128, height - 100));
+        window.draw(testTwoBtn);
+
+
 
         window.display();
     }
