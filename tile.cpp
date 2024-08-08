@@ -10,5 +10,13 @@
 using namespace std;
 
 Tile::Tile(int i, int j) {
+    TileData = "•";
+}
 
+string Tile::GetTileData() {
+    return TileData;
+}
+
+void Tile::SetTileData(string newTileData) {
+    TileData = newTileData;
 }

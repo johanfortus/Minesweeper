@@ -12,5 +12,7 @@ using namespace std;
 class Tile {
     string TileData;
 public:
-    Tile();
+    Tile(int i, int j);
+    string GetTileData();
+    void SetTileData(string newTileData);
 };

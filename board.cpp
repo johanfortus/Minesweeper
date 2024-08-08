@@ -8,15 +8,17 @@
 #include <cmath>
 #include "board.h"
 #include "random.h"
+#include "tile.h"
 using namespace std;
 
 Board::Board(int columnAmount, int rowAmount, int mineAmount) {
 
     // Creating Board - 2D Vector
     for(unsigned int i = 0; i < rowAmount; i++) {
-        vector<string> row;
+        vector<Tile> row;
         for(unsigned int j = 0; j < columnAmount; j++) {
-            row.push_back("•");
+            Tile tile(i, j);
+            row.push_back(tile);
         }
         boardVector.push_back(row);
     }
@@ -25,8 +27,8 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
     while(totalMinesPlaced != mineAmount){
         int randomRow = Random::Int(0, rowAmount - 1);
         int randomCol = Random::Int(0, columnAmount - 1);
-        if(boardVector[randomRow][randomCol] != "B"){
-            boardVector[randomRow][randomCol] = "B";
+        if(boardVector[randomRow][randomCol].GetTileData() != "B"){
+            boardVector[randomRow][randomCol].SetTileData("B");
             totalMinesPlaced++;
         }
         else{
@@ -41,7 +43,7 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
 void Board::printBoard() {
     for(int i = 0; i < boardVector.size(); i++){
         for(int j = 0; j < boardVector[i].size(); j++){
-            cout << boardVector[i][j] << " ";
+            cout << boardVector[i][j].GetTileData() << " ";
         }
         cout << endl;
     }
@@ -53,126 +55,126 @@ void Board::countAdjacentMines() {
     for(int i = 0; i < boardVector.size(); i++){
         for(int j = 0; j < boardVector[i].size(); j++){
 
-            if(boardVector[i][j] != "B"){
+            if(boardVector[i][j].GetTileData() != "B"){
                 int bombCount = 0;
 
                 // Top Left Corner
                 if(i == 0 && j == 0){
-                    if(boardVector[i][j + 1] == "B") // Right
+                    if(boardVector[i][j + 1].GetTileData() == "B") // Right
                         bombCount++;
-                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                    if(boardVector[i + 1][j + 1].GetTileData() == "B") // Bottom Right
                         bombCount++;
-                    if(boardVector[i + 1][j] == "B") // Bottom
+                    if(boardVector[i + 1][j].GetTileData() == "B") // Bottom
                         bombCount++;
 
                 }
 
                 // Top Right Corner
                 else if(i == 0 && j == boardVector[i].size() - 1){
-                    if(boardVector[i + 1][j] == "B") // Bottom
+                    if(boardVector[i + 1][j].GetTileData() == "B") // Bottom
                         bombCount++;
-                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                    if(boardVector[i + 1][j - 1].GetTileData() == "B") // Bottom Left
                         bombCount++;
-                    if(boardVector[i][j - 1] == "B") // Left
+                    if(boardVector[i][j - 1].GetTileData() == "B") // Left
                         bombCount++;
                 }
 
                 // Bottom Left Corner
                 else if(j == 0 && i == boardVector.size() - 1){
-                    if(boardVector[i - 1][j] == "B") // Top
+                    if(boardVector[i - 1][j].GetTileData() == "B") // Top
                         bombCount++;
-                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                    if(boardVector[i - 1][j + 1].GetTileData() == "B") // Top Right
                         bombCount++;
-                    if(boardVector[i][j + 1] == "B") // Right
+                    if(boardVector[i][j + 1].GetTileData() == "B") // Right
                         bombCount++;
                 }
 
                 // Bottom Right Corner
                 else if(j == boardVector[i].size() - 1 && i == boardVector.size() - 1){
-                    if(boardVector[i][j - 1] == "B") // Left
+                    if(boardVector[i][j - 1].GetTileData() == "B") // Left
                         bombCount++;
-                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                    if(boardVector[i - 1][j - 1].GetTileData() == "B") // Top Left
                         bombCount++;
-                    if(boardVector[i - 1][j] == "B") // Top
+                    if(boardVector[i - 1][j].GetTileData() == "B") // Top
                         bombCount++;
                 }
 
                 // Top Edge
                 else if(i == 0){
-                    if(boardVector[i][j + 1] == "B") // Right
+                    if(boardVector[i][j + 1].GetTileData() == "B") // Right
                         bombCount++;
-                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                    if(boardVector[i + 1][j + 1].GetTileData() == "B") // Bottom Right
                         bombCount++;
-                    if(boardVector[i + 1][j] == "B") // Bottom
+                    if(boardVector[i + 1][j].GetTileData() == "B") // Bottom
                         bombCount++;
-                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                    if(boardVector[i + 1][j - 1].GetTileData() == "B") // Bottom Left
                         bombCount++;
-                    if(boardVector[i][j - 1] == "B") // Left
+                    if(boardVector[i][j - 1].GetTileData() == "B") // Left
                         bombCount++;
                 }
 
                 // Bottom Edge
                 else if(i == boardVector.size() - 1){
-                    if(boardVector[i][j - 1] == "B") // Left
+                    if(boardVector[i][j - 1].GetTileData() == "B") // Left
                         bombCount++;
-                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                    if(boardVector[i - 1][j - 1].GetTileData() == "B") // Top Left
                         bombCount++;
-                    if(boardVector[i - 1][j] == "B") // Top
+                    if(boardVector[i - 1][j].GetTileData() == "B") // Top
                         bombCount++;
-                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                    if(boardVector[i - 1][j + 1].GetTileData() == "B") // Top Right
                         bombCount++;
-                    if(boardVector[i][j + 1] == "B") // Right
+                    if(boardVector[i][j + 1].GetTileData() == "B") // Right
                         bombCount++;
                 }
 
                 // Left Edge
                 else if(j == 0){
-                    if(boardVector[i - 1][j] == "B") // Top
+                    if(boardVector[i - 1][j].GetTileData() == "B") // Top
                         bombCount++;
-                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                    if(boardVector[i - 1][j + 1].GetTileData() == "B") // Top Right
                         bombCount++;
-                    if(boardVector[i][j + 1] == "B") // Right
+                    if(boardVector[i][j + 1].GetTileData() == "B") // Right
                         bombCount++;
-                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                    if(boardVector[i + 1][j + 1].GetTileData() == "B") // Bottom Right
                         bombCount++;
-                    if(boardVector[i + 1][j] == "B") // Bottom
+                    if(boardVector[i + 1][j].GetTileData() == "B") // Bottom
                         bombCount++;
                 }
 
                 // Right Edge
                 else if(j == boardVector[i].size() - 1){
-                    if(boardVector[i + 1][j] == "B") // Bottom
+                    if(boardVector[i + 1][j].GetTileData() == "B") // Bottom
                         bombCount++;
-                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                    if(boardVector[i + 1][j - 1].GetTileData() == "B") // Bottom Left
                         bombCount++;
-                    if(boardVector[i][j - 1] == "B") // Left
+                    if(boardVector[i][j - 1].GetTileData() == "B") // Left
                         bombCount++;
-                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                    if(boardVector[i - 1][j - 1].GetTileData() == "B") // Top Left
                         bombCount++;
-                    if(boardVector[i - 1][j] == "B") // Top
+                    if(boardVector[i - 1][j].GetTileData() == "B") // Top
                         bombCount++;
                 }
 
                 else {
-                    if(boardVector[i][j + 1] == "B") // Right
+                    if(boardVector[i][j + 1].GetTileData() == "B") // Right
                         bombCount++;
-                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                    if(boardVector[i + 1][j + 1].GetTileData() == "B") // Bottom Right
                         bombCount++;
-                    if(boardVector[i + 1][j] == "B") // Bottom
+                    if(boardVector[i + 1][j].GetTileData() == "B") // Bottom
                         bombCount++;
-                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                    if(boardVector[i + 1][j - 1].GetTileData() == "B") // Bottom Left
                         bombCount++;
-                    if(boardVector[i][j - 1] == "B") // Left
+                    if(boardVector[i][j - 1].GetTileData() == "B") // Left
                         bombCount++;
-                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                    if(boardVector[i - 1][j - 1].GetTileData() == "B") // Top Left
                         bombCount++;
-                    if(boardVector[i - 1][j] == "B") // Top
+                    if(boardVector[i - 1][j].GetTileData() == "B") // Top
                         bombCount++;
-                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                    if(boardVector[i - 1][j + 1].GetTileData() == "B") // Top Right
                         bombCount++;
                 }
                 if(bombCount > 0)
-                    boardVector[i][j] = to_string(bombCount);
+                    boardVector[i][j].SetTileData(to_string(bombCount));
             }
 
         }
@@ -180,6 +182,6 @@ void Board::countAdjacentMines() {
     }
 }
 
-vector<vector<string>> Board::getBoardVector(){
+vector<vector<Tile>> Board::getBoardVector(){
     return boardVector;
 }

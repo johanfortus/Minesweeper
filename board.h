@@ -11,12 +11,12 @@
 using namespace std;
 
 class Board {
-    vector<vector<string>> boardVector;
+    vector<vector<Tile>> boardVector;
 
     int totalMinesPlaced;
 public:
     Board(int columnAmount, int rowAmount, int mineAmount);
     void countAdjacentMines();
     void printBoard();
-    vector<vector<string>> getBoardVector();
+    vector<vector<Tile>> getBoardVector();
 };

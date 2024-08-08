@@ -47,7 +47,7 @@ int main(){
     Board board(columns, rows, mineCount);
     board.countAdjacentMines();
     board.printBoard();
-    vector<vector<string>> boardVector = board.getBoardVector();
+    vector<vector<Tile>> boardVector = board.getBoardVector();
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);
