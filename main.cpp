@@ -96,7 +96,7 @@ int main(){
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST ONE BUTTON CLICKED" << endl;
                         testFileLayout(boardVector);
-                        board.PrintBoard();
+                        board.CountAdjacentMines();
                     }
                 }
             }
