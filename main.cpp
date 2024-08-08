@@ -77,7 +77,6 @@ int main(){
                         cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
             }
         }
-
         window.clear(sf::Color::White);
         for(int i = 0; i < boardVector.size(); i++){
             for(int j = 0; j < boardVector[i].size(); j++){
