@@ -13,6 +13,7 @@
 using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
+void GameLoss();
 int main(){
 
     ifstream inFile("config.cfg");
@@ -63,7 +64,7 @@ int main(){
 
 
 
-
+    bool gameOver = false;
 
     while (window.isOpen())
     {
@@ -80,19 +81,13 @@ int main(){
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                         i = floor(event.mouseButton.y / 32);
                         j = floor(event.mouseButton.x / 32);
-                        cout << boardVector[i][j].GetTileData() << endl;
-                        // Left Clicking On Tile - Reveal Tile (boardVector[i][j]) if not flagged
-                        cout << "Adjacent Mines: " << boardVector[i][j].GetTileData();
-//                        if(!boardVector[i][j].GetFlaggedStatus())
-//                            boardVector[i][j].SetRevealStatus(true);
 
                         if(boardVector[i][j].GetTileData() == "0"){
                             revealBlankTiles(i, j, columns, rows, boardVector);
                         }
-                        else{
+                        else if(!boardVector[i][j].GetFlaggedStatus()){
                             boardVector[i][j].SetRevealStatus(true);
                         }
-
                     }
                     else if(event.mouseButton.button == sf::Mouse::Right) {
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
@@ -187,7 +182,9 @@ int main(){
 
     return 0;
 }
+void GameLoss() {
 
+}
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector) {
 
     // BASE CASE
