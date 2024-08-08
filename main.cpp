@@ -11,7 +11,8 @@
 #include "board.h"
 #include "tile.h"
 using namespace std;
-void adjacent();
+
+void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
 int main(){
 
     ifstream inFile("config.cfg");
@@ -79,11 +80,18 @@ int main(){
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                         i = floor(event.mouseButton.y / 32);
                         j = floor(event.mouseButton.x / 32);
-
+                        cout << boardVector[i][j].GetTileData() << endl;
                         // Left Clicking On Tile - Reveal Tile (boardVector[i][j]) if not flagged
-//                        cout << "Adjacent Mines: " << boardVector[i][j].GetTo
-                        if(!boardVector[i][j].GetFlaggedStatus())
+                        cout << "Adjacent Mines: " << boardVector[i][j].GetTileData();
+//                        if(!boardVector[i][j].GetFlaggedStatus())
+//                            boardVector[i][j].SetRevealStatus(true);
+
+                        if(boardVector[i][j].GetTileData() == "0"){
+                            revealBlankTiles(i, j, columns, rows, boardVector);
+                        }
+                        else{
                             boardVector[i][j].SetRevealStatus(true);
+                        }
 
                     }
                     else if(event.mouseButton.button == sf::Mouse::Right) {
@@ -177,19 +185,35 @@ int main(){
     }
     TextureManager::Clear();
 
-//    if(i < 0 || i > columns - 1){
-//        return;
-//    if(j < 0 || j > rows - 1){
-//        return;
-//    if(boardVector[i][j].GetRevealStatus()){
-//        return;
-//    boardVector[i][j].SetRevealStatus(true);
-//    int adjacentMines = 0;
-
-
-
-
     return 0;
 }
-    // height - 64
-    // width - 64
+
+void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector) {
+
+    // BASE CASE
+    // Return if tile is revealed, flagged, or a mine
+    if(i < 0 || i > rows - 1 || j < 0 || j > columns - 1)
+        return;
+    if(boardVector[i][j].GetRevealStatus())
+        return;
+    if(boardVector[i][j].GetFlaggedStatus())
+        return;
+    if(boardVector[i][j].GetMineStatus())
+        return;
+
+    // Reveal tile
+    boardVector[i][j].SetRevealStatus(true);
+
+    // If tile has adjacent mines, recurse if it doesn't
+    if(boardVector[i][j].GetTileData() != "0")
+        return;
+
+    revealBlankTiles(i - 1, j, columns, rows, boardVector); // TOP
+    revealBlankTiles(i - 1, j + 1, columns, rows, boardVector); // TOP RIGHT
+    revealBlankTiles(i, j + 1, columns, rows, boardVector); // RIGHT
+    revealBlankTiles(i + 1, j + 1, columns, rows, boardVector); // BOTTOM RIGHT
+    revealBlankTiles(i + 1, j, columns, rows, boardVector); // BOTTOM
+    revealBlankTiles(i + 1, j - 1, columns, rows, boardVector); // BOTTOM LEFT
+    revealBlankTiles(i, j - 1, columns, rows, boardVector); // LEFT
+    revealBlankTiles(i - 1, j - 1, columns, rows, boardVector); // TOP LEFT
+}
