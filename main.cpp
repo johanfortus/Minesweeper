@@ -44,15 +44,21 @@ int main(){
     cout << "Random Number: " << Random::Int(0, 200) << endl;
 
     Board board(columns, rows, mineCount);
+    board.countAdjacentMines();
     board.printBoard();
+    vector<vector<string>> boardVector = board.getBoardVector();
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
 
-    sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
-    tileHiddenSprite.setPosition(sf::Vector2f(0,100));
+//    sf::Sprite tileHiddenSprite(TextureManager::GetTexture("tile_hidden"));
+//    tileHiddenSprite.setPosition(sf::Vector2f(0,32));
+
+    sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
+    tileRevealedSprite.setPosition(sf::Vector2f(0,0));
+
 
 
 
@@ -67,7 +73,16 @@ int main(){
         }
 
         window.clear();
-        window.draw(tileHiddenSprite);
+        for(int i = 0; i < boardVector.size(); i++){
+            for(int j = 0; j < boardVector[i].size(); j++){
+
+                sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
+                tileRevealedSprite.setPosition(sf::Vector2f(j * 32,i * 32));
+                window.draw(tileRevealedSprite);
+            }
+        }
+
+//        window.draw(tileHiddenSprite);
         window.display();
     }
     TextureManager::Clear();

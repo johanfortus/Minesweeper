@@ -47,79 +47,139 @@ void Board::printBoard() {
     }
 }
 
-
+// Yes I am aware this code is severely violating the DRY principle
 void Board::countAdjacentMines() {
-    vector<vector<string>> myArray;
-    myArray = {
-            {"L", "•", "•", "B", "C"},
-            {"•", "B", "•", "•", "•"},
-            {"X", "X", "X", "X", "$"}};
-//    cout << myArray[0][0] << endl;
 
-    for(int i = 0; i < myArray.size(); i++){
-        for(int j = 0; j < myArray[i].size(); j++){
+    for(int i = 0; i < boardVector.size(); i++){
+        for(int j = 0; j < boardVector[i].size(); j++){
 
-            int bombCount;
+            if(boardVector[i][j] != "B"){
+                int bombCount = 0;
 
-            // Top Left Corner
-            if(i == 0 && j == 0){
-                if(myArray[i][j + 1] == "B") // Right
-                    bombCount++;
-                if(myArray[i + 1][j + 1] == "B") // Bottom Right
-                    bombCount++;
-                if(myArray[i + 1][j] == "B") // Bottom
-                    bombCount++;
-                if(myArray[i + 1][j - 1] == "B") // Bottom Left
-                    bombCount++;
-                if(myArray[i][j - 1] == "B") // Left
-                    bombCount++;
-                if(myArray[i - 1][j - 1] == "B") // Top Left
-                    bombCount++;
-                if(myArray[i - 1][j] == "B") // Top
-                    bombCount++;
-                if(myArray[i - 1][j + 1] == "B") // Top Right
-                    bombCount++;
+                // Top Left Corner
+                if(i == 0 && j == 0){
+                    if(boardVector[i][j + 1] == "B") // Right
+                        bombCount++;
+                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                        bombCount++;
+                    if(boardVector[i + 1][j] == "B") // Bottom
+                        bombCount++;
+
+                }
+
+                // Top Right Corner
+                else if(i == 0 && j == boardVector[i].size() - 1){
+                    if(boardVector[i + 1][j] == "B") // Bottom
+                        bombCount++;
+                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                        bombCount++;
+                    if(boardVector[i][j - 1] == "B") // Left
+                        bombCount++;
+                }
+
+                // Bottom Left Corner
+                else if(j == 0 && i == boardVector.size() - 1){
+                    if(boardVector[i - 1][j] == "B") // Top
+                        bombCount++;
+                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                        bombCount++;
+                    if(boardVector[i][j + 1] == "B") // Right
+                        bombCount++;
+                }
+
+                // Bottom Right Corner
+                else if(j == boardVector[i].size() - 1 && i == boardVector.size() - 1){
+                    if(boardVector[i][j - 1] == "B") // Left
+                        bombCount++;
+                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                        bombCount++;
+                    if(boardVector[i - 1][j] == "B") // Top
+                        bombCount++;
+                }
+
+                // Top Edge
+                else if(i == 0){
+                    if(boardVector[i][j + 1] == "B") // Right
+                        bombCount++;
+                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                        bombCount++;
+                    if(boardVector[i + 1][j] == "B") // Bottom
+                        bombCount++;
+                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                        bombCount++;
+                    if(boardVector[i][j - 1] == "B") // Left
+                        bombCount++;
+                }
+
+                // Bottom Edge
+                else if(i == boardVector.size() - 1){
+                    if(boardVector[i][j - 1] == "B") // Left
+                        bombCount++;
+                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                        bombCount++;
+                    if(boardVector[i - 1][j] == "B") // Top
+                        bombCount++;
+                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                        bombCount++;
+                    if(boardVector[i][j + 1] == "B") // Right
+                        bombCount++;
+                }
+
+                // Left Edge
+                else if(j == 0){
+                    if(boardVector[i - 1][j] == "B") // Top
+                        bombCount++;
+                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                        bombCount++;
+                    if(boardVector[i][j + 1] == "B") // Right
+                        bombCount++;
+                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                        bombCount++;
+                    if(boardVector[i + 1][j] == "B") // Bottom
+                        bombCount++;
+                }
+
+                // Right Edge
+                else if(j == boardVector[i].size() - 1){
+                    if(boardVector[i + 1][j] == "B") // Bottom
+                        bombCount++;
+                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                        bombCount++;
+                    if(boardVector[i][j - 1] == "B") // Left
+                        bombCount++;
+                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                        bombCount++;
+                    if(boardVector[i - 1][j] == "B") // Top
+                        bombCount++;
+                }
+
+                else {
+                    if(boardVector[i][j + 1] == "B") // Right
+                        bombCount++;
+                    if(boardVector[i + 1][j + 1] == "B") // Bottom Right
+                        bombCount++;
+                    if(boardVector[i + 1][j] == "B") // Bottom
+                        bombCount++;
+                    if(boardVector[i + 1][j - 1] == "B") // Bottom Left
+                        bombCount++;
+                    if(boardVector[i][j - 1] == "B") // Left
+                        bombCount++;
+                    if(boardVector[i - 1][j - 1] == "B") // Top Left
+                        bombCount++;
+                    if(boardVector[i - 1][j] == "B") // Top
+                        bombCount++;
+                    if(boardVector[i - 1][j + 1] == "B") // Top Right
+                        bombCount++;
+                }
+                if(bombCount > 0)
+                    boardVector[i][j] = to_string(bombCount);
             }
 
-            // Top Right Corner
-            else if(i == 0 && j == myArray[i].size() - 1){
-                cout << myArray[i][j];
-            }
-
-            // Bottom Left Corner
-            else if(j == 0 && i == myArray.size() - 1){
-                cout << myArray[i][j];
-            }
-
-            // Bottom Right Corner
-            else if(j == myArray[i].size() - 1 && i == myArray.size() - 1){
-                cout << myArray[i][j];
-            }
-
-            // Top Edge
-            else if(i == 0){
-                cout << myArray[i][j];
-            }
-
-            // Bottom Edge
-            else if(i == myArray.size() - 1){
-                cout << myArray[i][j];
-            }
-
-            // Left Edge
-            else if(j == 0){
-                cout << myArray[i][j];
-            }
-
-            // Right Edge
-            else if(j == myArray[i].size() - 1){
-                cout << myArray[i][j];
-            }
-
-            else {
-                cout << myArray[i][j];
-            }
         }
         cout << endl;
     }
+}
+
+vector<vector<string>> Board::getBoardVector(){
+    return boardVector;
 }

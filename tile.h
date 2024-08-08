@@ -11,5 +11,5 @@ using namespace std;
 
 class Tile {
 public:
-    Tile();
+    Tile(int i, int j);
 };
