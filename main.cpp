@@ -163,6 +163,14 @@ int main(){
         sf::Sprite debugBtn(TextureManager::GetTexture("debug"));
         debugBtn.setPosition(sf::Vector2f(width - 256, height - 100));
         window.draw(debugBtn);
+        // LOCATION: width: 544, height: 512
+
+        // Click Location:
+        // > width - 256 - 32 && < width - 256 + 64
+        // > height - 100 - 32 && < height - 100 + 64
+        sf::Sprite test(TextureManager::GetTexture("mine"));
+        test.setPosition(sf::Vector2f(544, 512 + 64));
+        window.draw(test);
 
         // Draw Smiley Face Button
         sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
