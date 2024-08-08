@@ -85,7 +85,10 @@ int main(){
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                         i = floor(event.mouseButton.y / 32);
                         j = floor(event.mouseButton.x / 32);
-                        boardVector[i][j].SetFlaggedStatus(true);
+                        if(!boardVector[i][j].GetFlaggedStatus())
+                            boardVector[i][j].SetFlaggedStatus(true);
+                        else
+                            boardVector[i][j].SetFlaggedStatus(false);
                     }
                     break;
             }
