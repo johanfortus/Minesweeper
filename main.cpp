@@ -27,6 +27,7 @@ int main(){
     int height;
     inFile >> rows;
     height = (rows * 32) + 100;
+    cout << "Width: " << width << ", Height: " << height << endl;
 
     int mineCount;
     inFile >> mineCount;
@@ -37,8 +38,10 @@ int main(){
 
     bool gameOver = false;
     bool gameWon = false;
+    bool debugMode = false;
 
     // Bottom Menu Buttons - height set to minus 100 instead of height minus 96 (32*3) bc it looks slightly better
+    // Hard Coded values are based on the button size (64x64)
     sf::Vector2f smileyFaceBtnPos(width/2 - 32, height - 100);
     sf::Vector2f debugBtnPos(width - 256, height - 100);
     sf::Vector2f testOneBtnPos(width - 192, height - 100);
@@ -77,7 +80,7 @@ int main(){
             /*=== DEBUG BUTTON FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
-                    if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                    if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "DEBUG BUTTON CLICKED" << endl;
                     }
                 }
