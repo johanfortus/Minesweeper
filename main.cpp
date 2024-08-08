@@ -196,10 +196,16 @@ int main(){
                             j = floor(event.mouseButton.x / 32);
 
                             // Right Click - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
-                            if(!boardVector[i][j].GetFlaggedStatus())
+                            if(!boardVector[i][j].GetFlaggedStatus()){
                                 boardVector[i][j].SetFlaggedStatus(true);
-                            else
+                                flaggedMines--;
+                                cout << flaggedMines << endl;
+                            }
+                            else{
                                 boardVector[i][j].SetFlaggedStatus(false);
+                                flaggedMines++;
+                                cout << flaggedMines << endl;
+                            }
                         }
                         break;
                 }
@@ -400,25 +406,25 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
     int rectLeft = 0;
 
     // -
-    sf::Sprite negSign(TextureManager::GetTexture("digits"));
-    sf::IntRect rectNegSign(210, 0, rectWidth, 32);
-    negSign.setTextureRect(rectNegSign);
-    negSign.setPosition(width - width, height - 100);
-    digitSprites["-"] = negSign;
+//    sf::Sprite negSign(TextureManager::GetTexture("digits"));
+//    sf::IntRect rectNegSign(210, 0, rectWidth, 32);
+//    negSign.setTextureRect(rectNegSign);
+//    negSign.setPosition(width - width, height - 100);
+//    digitSprites["-"] = negSign;
 
     // 0
-    sf::Sprite zero(TextureManager::GetTexture("digits"));
-    sf::IntRect rectZero(0, 0, rectWidth, 32);
-    zero.setTextureRect(rectZero);
-    zero.setPosition(width - width, height - 100);
-    digitSprites["0"] = zero;
+//    sf::Sprite zero(TextureManager::GetTexture("digits"));
+//    sf::IntRect rectZero(0, 0, rectWidth, 32);
+//    zero.setTextureRect(rectZero);
+//    zero.setPosition(width - width, height - 100);
+//    digitSprites["0"] = zero;
 
     // 1
-    sf::Sprite one(TextureManager::GetTexture("digits"));
-    sf::IntRect rectOne(21, 0, 21, 32);
-    one.setTextureRect(rectOne);
-    one.setPosition(width - width + 16, height - 100);
-    digitSprites["1"] = one;
+//    sf::Sprite one(TextureManager::GetTexture("digits"));
+//    sf::IntRect rectOne(21, 0, 21, 32);
+//    one.setTextureRect(rectOne);
+//    one.setPosition(width - width + 16, height - 100);
+//    digitSprites["1"] = one;
 
     int num = -4;
     string stringNum = to_string(num);
