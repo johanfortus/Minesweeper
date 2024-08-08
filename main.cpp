@@ -155,6 +155,11 @@ int main(){
         testOneBtn.setPosition(sf::Vector2f(width - 192, height - 100));
         window.draw(testOneBtn);
 
+        // Draw Smiley Face Button
+        sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
+        SmileyFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
+        window.draw(SmileyFaceButton);
+
 
 
         window.display();
