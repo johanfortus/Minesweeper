@@ -174,8 +174,8 @@ void Board::CountAdjacentMines() {
                     if(boardVector[i - 1][j + 1].GetTileData() == "B") // Top Right
                         bombCount++;
                 }
-                if(bombCount > 0)
-                    boardVector[i][j].SetTileData(to_string(bombCount));
+//                if(bombCount > 0)
+                boardVector[i][j].SetTileData(to_string(bombCount));
             }
         }
         cout << endl;

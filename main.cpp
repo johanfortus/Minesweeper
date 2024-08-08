@@ -75,6 +75,7 @@ int main(){
                 case sf::Event::MouseButtonPressed:
                     int i, j;
                     if(event.mouseButton.button == sf::Mouse::Left) {
+                        cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
                         cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                         i = floor(event.mouseButton.y / 32);
                         j = floor(event.mouseButton.x / 32);
@@ -138,9 +139,17 @@ int main(){
 
             }
         }
+
+        // Draw Test #3 Button
+        sf::Sprite testThreeBtn(TextureManager::GetTexture("test_3"));
+        testThreeBtn.setPosition(sf::Vector2f(width - 64, height - 100)); // instead of height - 96 bc it looks slightly better
+        window.draw(testThreeBtn);
+
+
         window.display();
     }
     TextureManager::Clear();
     return 0;
 }
-
+    // height - 64
+    // width - 64
