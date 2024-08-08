@@ -13,11 +13,11 @@
 using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
-
+void testFileLayout(vector<vector<Tile>>& boardVector);
 int main(){
     ifstream inFile("config.cfg");
     string lineFromFile;
-    
+
     int columns;
     int width;
     inFile >> columns;
@@ -95,6 +95,8 @@ int main(){
                 if(event.mouseButton.button == sf::Mouse::Left){
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST ONE BUTTON CLICKED" << endl;
+                        testFileLayout(boardVector);
+                        board.PrintBoard();
                     }
                 }
             }
@@ -294,7 +296,24 @@ int main(){
 }
 
 void testFileLayout(vector<vector<Tile>>& boardVector){
+    ifstream testFile("testboard1.brd");
 
+    string row;
+    for(unsigned int i = 0; i < boardVector.size(); i++){
+        for(unsigned int j = 0; j < boardVector[i].size(); j++){
+            row;
+            testFile >> row;
+//            cout << row[j] << endl;
+            if(row[j] == '1'){
+                cout << "row[j] is 1" << endl;
+                boardVector[i][j].SetTileData("B");
+                boardVector[i][j].SetMineStatus(true);
+            }
+            else {
+                boardVector[i][j].SetTileData("0");
+            }
+        }
+    }
 }
 
 // Recursive reveal neighboring tiles function
