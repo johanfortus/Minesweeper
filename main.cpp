@@ -13,7 +13,8 @@
 using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
-void testFileLayout(vector<vector<Tile>>& boardVector);
+void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
+
 int main(){
     ifstream inFile("config.cfg");
     string lineFromFile;
@@ -31,6 +32,7 @@ int main(){
 
     int mineCount;
     inFile >> mineCount;
+    int originalMineCount = mineCount; // mineCount may be updated due to testing purposes
 
     int tileCount;
     tileCount = columns * rows;
@@ -66,6 +68,7 @@ int main(){
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
                     if(event.mouseButton.x >= width / 2 - 32 && event.mouseButton.x <= width / 2 + 32 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        mineCount = originalMineCount;
                         Board board(columns, rows, mineCount);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -93,10 +96,18 @@ int main(){
             /*=== TEST ONE BUTTON FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
+                    string testOneFileName = "testboard1.brd";
+                    string testTwoFileName = "testboard2.brd";
+                    string testThreeFileName = "testboard3.brd";
+
+                    // Test One Button
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST ONE BUTTON CLICKED" << endl;
-                        testFileLayout(boardVector);
+                        testFileLayout(boardVector, mineCount, testOneFileName);
+                        board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
+                        board.PrintBoard();
+                        boardVector = board.GetBoardVector();
                     }
                 }
             }
@@ -295,9 +306,10 @@ int main(){
     return 0;
 }
 
-void testFileLayout(vector<vector<Tile>>& boardVector){
+void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName){
     ifstream testFile("testboard1.brd");
     string line;
+    mineCount = 0;
 
     for(unsigned int i = 0; i < boardVector.size(); i++){
         if(getline(testFile, line)){
@@ -306,6 +318,7 @@ void testFileLayout(vector<vector<Tile>>& boardVector){
                     cout << "row[j] is 1" << endl;
                     boardVector[i][j].SetTileData("B");
                     boardVector[i][j].SetMineStatus(true);
+                    mineCount++;
                 }
                 else {
                     boardVector[i][j].SetTileData("0");

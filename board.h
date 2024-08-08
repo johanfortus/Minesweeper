@@ -17,5 +17,6 @@ public:
     Board(int columnAmount, int rowAmount, int mineAmount);
     void CountAdjacentMines();
     void PrintBoard();
+    void UpdateBoard(vector<vector<Tile>> newBoard);
     vector<vector<Tile>> GetBoardVector();
 };

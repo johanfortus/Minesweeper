@@ -51,6 +51,10 @@ void Board::PrintBoard() {
     }
 }
 
+void Board::UpdateBoard(vector<vector<Tile>> newBoard) {
+    boardVector = newBoard;
+}
+
 // Yes I am aware this code is severely violating the DRY principle
 void Board::CountAdjacentMines() {
 
