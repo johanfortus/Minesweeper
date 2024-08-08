@@ -17,7 +17,7 @@ void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>&
 int main(){
     ifstream inFile("config.cfg");
     string lineFromFile;
-
+    
     int columns;
     int width;
     inFile >> columns;
@@ -291,6 +291,10 @@ int main(){
     TextureManager::Clear();
 
     return 0;
+}
+
+void testFileLayout(vector<vector<Tile>>& boardVector){
+
 }
 
 // Recursive reveal neighboring tiles function
