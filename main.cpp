@@ -74,7 +74,7 @@ int main(){
             switch(event.type){
                 case sf::Event::MouseButtonPressed:
                     if(event.mouseButton.button == sf::Mouse::Left)
-                        cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
+                        cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
             }
         }
         window.clear(sf::Color::White);
