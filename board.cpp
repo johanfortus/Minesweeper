@@ -176,10 +176,15 @@ void Board::CountAdjacentMines() {
                 }
 //                if(bombCount > 0)
                 boardVector[i][j].SetTileData(to_string(bombCount));
+                totalAdjacentMines = bombCount;
             }
         }
         cout << endl;
     }
+}
+
+int Board::GetTotalAdjacentMines() {
+    return totalAdjacentMines;
 }
 
 vector<vector<Tile>> Board::GetBoardVector(){

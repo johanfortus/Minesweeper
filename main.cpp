@@ -175,6 +175,19 @@ int main(){
         window.display();
     }
     TextureManager::Clear();
+
+    if(i < 0 || i > columns - 1){
+        return;
+    if(j < 0 || j > rows - 1){
+        return;
+    if(boardVector[i][j].GetRevealStatus()){
+        return;
+    boardVector[i][j].SetRevealStatus(true);
+    int adjacentMines = 0;
+
+
+
+
     return 0;
 }
     // height - 64
