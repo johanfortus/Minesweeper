@@ -13,7 +13,7 @@
 using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
-void GameLoss();
+void GameOver();
 int main(){
 
     ifstream inFile("config.cfg");
@@ -62,8 +62,6 @@ int main(){
     sf::Sprite tileRevealedSprite(TextureManager::GetTexture("tile_revealed"));
     tileRevealedSprite.setPosition(sf::Vector2f(0,0));
 
-
-
     bool gameOver = false;
 
     while (window.isOpen())
@@ -73,39 +71,52 @@ int main(){
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            switch(event.type){
-                case sf::Event::MouseButtonPressed:
-                    int i, j;
-                    if(event.mouseButton.button == sf::Mouse::Left) {
-                        cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
-                        cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
-                        i = floor(event.mouseButton.y / 32);
-                        j = floor(event.mouseButton.x / 32);
+            if(!gameOver){
+                switch(event.type){
+                    case sf::Event::MouseButtonPressed:
+                        int i, j;
+                        if(event.mouseButton.button == sf::Mouse::Left) {
+                            cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
+                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+                            i = floor(event.mouseButton.y / 32);
+                            j = floor(event.mouseButton.x / 32);
 
-                        if(boardVector[i][j].GetTileData() == "0"){
-                            revealBlankTiles(i, j, columns, rows, boardVector);
+                            if(boardVector[i][j].GetMineStatus()){
+                                gameOver = true;
+                                boardVector[i][j].SetRevealStatus(true);
+                            }
+                            else if(boardVector[i][j].GetTileData() == "0"){
+                                revealBlankTiles(i, j, columns, rows, boardVector);
+                            }
+                            else if(!boardVector[i][j].GetFlaggedStatus()){
+                                boardVector[i][j].SetRevealStatus(true);
+                            }
                         }
-                        else if(!boardVector[i][j].GetFlaggedStatus()){
-                            boardVector[i][j].SetRevealStatus(true);
-                        }
-                    }
-                    else if(event.mouseButton.button == sf::Mouse::Right) {
-                        cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
-                        i = floor(event.mouseButton.y / 32);
-                        j = floor(event.mouseButton.x / 32);
+                        else if(event.mouseButton.button == sf::Mouse::Right) {
+                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
+                            i = floor(event.mouseButton.y / 32);
+                            j = floor(event.mouseButton.x / 32);
 
-                        // Right Clicking On Tile - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
-                        if(!boardVector[i][j].GetFlaggedStatus())
-                            boardVector[i][j].SetFlaggedStatus(true);
-                        else
-                            boardVector[i][j].SetFlaggedStatus(false);
-                    }
-                    break;
+                            // Right Clicking On Tile - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
+                            if(!boardVector[i][j].GetFlaggedStatus())
+                                boardVector[i][j].SetFlaggedStatus(true);
+                            else
+                                boardVector[i][j].SetFlaggedStatus(false);
+                        }
+                        break;
+                }
             }
         }
         window.clear(sf::Color::White);
         for(int i = 0; i < boardVector.size(); i++){
             for(int j = 0; j < boardVector[i].size(); j++){
+
+                if(gameOver) {
+                    if(boardVector[i][j].GetMineStatus()){
+                        boardVector[i][j].SetRevealStatus(true);
+                    }
+                }
+
 
                 // If Tile is revealed
                 if(boardVector[i][j].GetRevealStatus()){
@@ -174,6 +185,12 @@ int main(){
         SmileyFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
         window.draw(SmileyFaceButton);
 
+        if(gameOver){
+            sf::Sprite SadFaceButton(TextureManager::GetTexture("face_lose"));
+            SadFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
+            window.draw(SadFaceButton);
+        }
+
 
 
         window.display();
@@ -182,9 +199,7 @@ int main(){
 
     return 0;
 }
-void GameLoss() {
 
-}
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector) {
 
     // BASE CASE
