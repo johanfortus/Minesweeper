@@ -36,8 +36,6 @@ public:
     bool GetFlaggedStatus();
     void SetFlaggedStatus(bool flaggedStatus);
 
-    bool GetNumberStatus();
-    void SetNumberStatus(bool numberStatus);
 
 
     sf::Sprite& GetSprite();

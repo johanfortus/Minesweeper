@@ -297,20 +297,22 @@ int main(){
 
 void testFileLayout(vector<vector<Tile>>& boardVector){
     ifstream testFile("testboard1.brd");
+    string line;
 
-    string row;
     for(unsigned int i = 0; i < boardVector.size(); i++){
-        for(unsigned int j = 0; j < boardVector[i].size(); j++){
-            row;
-            testFile >> row;
-//            cout << row[j] << endl;
-            if(row[j] == '1'){
-                cout << "row[j] is 1" << endl;
-                boardVector[i][j].SetTileData("B");
-                boardVector[i][j].SetMineStatus(true);
-            }
-            else {
-                boardVector[i][j].SetTileData("0");
+        if(getline(testFile, line)){
+            for(unsigned int j = 0; j < boardVector[i].size(); j++){
+                if(line[j] == '1'){
+                    cout << "row[j] is 1" << endl;
+                    boardVector[i][j].SetTileData("B");
+                    boardVector[i][j].SetMineStatus(true);
+                }
+                else {
+                    boardVector[i][j].SetTileData("0");
+                    boardVector[i][j].SetMineStatus(false);
+                    boardVector[i][j].SetRevealStatus(false);
+                    boardVector[i][j].SetFlaggedStatus(false);
+                }
             }
         }
     }

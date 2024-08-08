@@ -40,9 +40,6 @@ bool Tile::GetRevealStatus() {
 bool Tile::GetFlaggedStatus() {
     return flagged;
 }
-bool Tile::GetNumberStatus() {
-    return numbered;
-}
 
 void Tile::SetMineStatus(bool mineStatus) {
     mine = mineStatus;
@@ -52,9 +49,6 @@ void Tile::SetRevealStatus(bool revealStatus) {
 }
 void Tile::SetFlaggedStatus(bool flaggedStatus) {
     flagged = flaggedStatus;
-}
-void Tile::SetNumberStatus(bool numberStatus) {
-    numbered = numberStatus;
 }
 
 
