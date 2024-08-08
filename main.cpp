@@ -100,49 +100,45 @@ int main(){
                     // Test One Button
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST ONE BUTTON CLICKED" << endl;
+                        gameOver = false;
+                        gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard1.brd");
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
                         boardVector = board.GetBoardVector();
+
+                        sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
+                        SmileyFaceButton.setPosition(smileyFaceBtnPos);
+                        window.draw(SmileyFaceButton);
                     }
 
                     // Test Two Button
                     else if(event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST TWO BUTTON CLICKED" << endl;
+                        gameOver = false;
+                        gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard2.brd");
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
                         boardVector = board.GetBoardVector();
+
+                        sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
+                        SmileyFaceButton.setPosition(smileyFaceBtnPos);
+                        window.draw(SmileyFaceButton);
                     }
 
                     // Test Three Button
                     else if(event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         cout << "TEST THREE BUTTON CLICKED" << endl;
+                        gameOver = false;
+                        gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard3.brd");
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
                         boardVector = board.GetBoardVector();
-                    }
-                }
-            }
-
-            /*=== TEST TWO BUTTON FUNCTIONALITY ===*/
-            if(event.type == sf::Event::MouseButtonPressed) {
-                if(event.mouseButton.button == sf::Mouse::Left){
-                    if(event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        cout << "TEST TWO BUTTON CLICKED" << endl;
-                    }
-                }
-            }
-
-            /*=== TEST TWO THREE FUNCTIONALITY ===*/
-            if(event.type == sf::Event::MouseButtonPressed) {
-                if(event.mouseButton.button == sf::Mouse::Left){
-                    if(event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        cout << "TEST THREE BUTTON CLICKED" << endl;
                     }
                 }
             }
@@ -340,9 +336,9 @@ void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fi
                 else {
                     boardVector[i][j].SetTileData("0");
                     boardVector[i][j].SetMineStatus(false);
-                    boardVector[i][j].SetRevealStatus(false);
-                    boardVector[i][j].SetFlaggedStatus(false);
                 }
+                boardVector[i][j].SetRevealStatus(false);
+                boardVector[i][j].SetFlaggedStatus(false);
             }
         }
     }
