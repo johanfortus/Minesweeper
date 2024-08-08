@@ -35,24 +35,6 @@ void Tile::SetNumberData(string newNumberData) {
 }
 
 
-//void SetNumberDataSprite(string number) {
-//    if(number == "1")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_1"));
-//    if(number == "2")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_2"));
-//    if(number == "3")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_3"));
-//    if(number == "4")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_4"));
-//    if(number == "5")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_5"));
-//    if(number == "6")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_6"));
-//    if(number == "7")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_7"));
-//    if(number == "8")
-//        sf::Sprite tileNumberDataSprite(TextureManager::GetTexture("number_8"));
-//}
 
 
 

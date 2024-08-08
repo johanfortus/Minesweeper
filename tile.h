@@ -19,7 +19,7 @@ class Tile {
     string numberData = "";
 
     bool mine = false;
-    bool revealed = false;
+    bool revealed = true;
     bool flagged = false;
     bool numbered = false;
 public:
