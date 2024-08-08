@@ -150,6 +150,11 @@ int main(){
         testTwoBtn.setPosition(sf::Vector2f(width - 128, height - 100));
         window.draw(testTwoBtn);
 
+        // Draw Test #1 Button
+        sf::Sprite testOneBtn(TextureManager::GetTexture("test_1"));
+        testOneBtn.setPosition(sf::Vector2f(width - 192, height - 100));
+        window.draw(testOneBtn);
+
 
 
         window.display();
