@@ -105,10 +105,12 @@ int main(){
 
                             if(i >= 0 && i < rows && j >= 0 && j < columns) {
 
-                                // Left Click - If Tile is a Mine, reveal mine and set gameOver to true
+                                // Left Click - If Tile is a Mine, reveal mine and set gameOver to true if NOT flagged
                                 if(boardVector[i][j].GetMineStatus()){
-                                    gameOver = true;
-                                    boardVector[i][j].SetRevealStatus(true);
+                                    if(!boardVector[i][j].GetFlaggedStatus()){
+                                        gameOver = true;
+                                        boardVector[i][j].SetRevealStatus(true);
+                                    }
                                 }
 
                                     // Left Click - If Tile is not a blank tile, reveal
@@ -206,7 +208,6 @@ int main(){
                         window.draw(tileMineSprite);
                     }
                 }
-
             }
         }
 
