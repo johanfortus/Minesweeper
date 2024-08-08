@@ -14,6 +14,7 @@ using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
 void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
+void loadDigitTextures(unordered_map<string, sf::Texture>& digitTextures);
 
 int main(){
     ifstream inFile("config.cfg");
@@ -32,6 +33,7 @@ int main(){
 
     int mineCount;
     inFile >> mineCount;
+    int flaggedMines = mineCount;
     int originalMineCount = mineCount; // mineCount may be updated due to testing purposes
 
     int tileCount;
@@ -56,6 +58,11 @@ int main(){
     board.PrintBoard();
     vector<vector<Tile>> boardVector = board.GetBoardVector();
 
+    unordered_map<string, sf::Texture> digitTextures;
+    loadDigitTextures(digitTextures);
+
+
+
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
 
     while (window.isOpen()) {
@@ -69,6 +76,7 @@ int main(){
                 if(event.mouseButton.button == sf::Mouse::Left){
                     if(event.mouseButton.x >= width / 2 - 32 && event.mouseButton.x <= width / 2 + 32 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
                         mineCount = originalMineCount;
+                        flaggedMines = mineCount;
                         Board board(columns, rows, mineCount);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -103,6 +111,7 @@ int main(){
                         gameOver = false;
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard1.brd");
+                        flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -119,6 +128,7 @@ int main(){
                         gameOver = false;
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard2.brd");
+                        flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -135,6 +145,7 @@ int main(){
                         gameOver = false;
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard3.brd");
+                        flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
                         board.PrintBoard();
@@ -289,6 +300,10 @@ int main(){
         SmileyFaceButton.setPosition(smileyFaceBtnPos);
         window.draw(SmileyFaceButton);
 
+        // Draw Counter
+        sf::Sprite digitOne(digitTextures["one"]);
+        window.draw(digitOne);
+
         // Check Game Loss
         if(gameOver){
             sf::Sprite SadFaceButton(TextureManager::GetTexture("face_lose"));
@@ -317,31 +332,6 @@ int main(){
     TextureManager::Clear();
 
     return 0;
-}
-
-void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName){
-    ifstream testFile(fileName);
-    string line;
-    mineCount = 0;
-
-    for(unsigned int i = 0; i < boardVector.size(); i++){
-        if(getline(testFile, line)){
-            for(unsigned int j = 0; j < boardVector[i].size(); j++){
-                if(line[j] == '1'){
-                    cout << "row[j] is 1" << endl;
-                    boardVector[i][j].SetTileData("B");
-                    boardVector[i][j].SetMineStatus(true);
-                    mineCount++;
-                }
-                else {
-                    boardVector[i][j].SetTileData("0");
-                    boardVector[i][j].SetMineStatus(false);
-                }
-                boardVector[i][j].SetRevealStatus(false);
-                boardVector[i][j].SetFlaggedStatus(false);
-            }
-        }
-    }
 }
 
 // Recursive reveal neighboring tiles function
@@ -373,4 +363,36 @@ void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>&
     revealBlankTiles(i + 1, j - 1, columns, rows, boardVector); // BOTTOM LEFT
     revealBlankTiles(i, j - 1, columns, rows, boardVector); // LEFT
     revealBlankTiles(i - 1, j - 1, columns, rows, boardVector); // TOP LEFT
+}
+
+void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName){
+    ifstream testFile(fileName);
+    string line;
+    mineCount = 0;
+
+    for(unsigned int i = 0; i < boardVector.size(); i++){
+        if(getline(testFile, line)){
+            for(unsigned int j = 0; j < boardVector[i].size(); j++){
+                if(line[j] == '1'){
+                    cout << "row[j] is 1" << endl;
+                    boardVector[i][j].SetTileData("B");
+                    boardVector[i][j].SetMineStatus(true);
+                    mineCount++;
+                }
+                else {
+                    boardVector[i][j].SetTileData("0");
+                    boardVector[i][j].SetMineStatus(false);
+                }
+                boardVector[i][j].SetRevealStatus(false);
+                boardVector[i][j].SetFlaggedStatus(false);
+            }
+        }
+    }
+}
+
+void loadDigitTextures(unordered_map<string, sf::Texture>& digitTextures){
+    cout << "Loading Digit Textures" << endl;
+//    sf::Sprite digitOne(TextureManager::GetTexture("digits"));
+    digitTextures["one"].loadFromFile("images/digits.png");
+
 }
