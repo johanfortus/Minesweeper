@@ -14,7 +14,7 @@ using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
 void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
-void loadDigitTextures(unordered_map<string, sf::Texture>& digitTextures);
+void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height);
 
 int main(){
     ifstream inFile("config.cfg");
@@ -55,20 +55,12 @@ int main(){
 
     Board board(columns, rows, mineCount);
     board.CountAdjacentMines();
-    board.PrintBoard();
+//    board.PrintBoard();
     vector<vector<Tile>> boardVector = board.GetBoardVector();
 
-//    unordered_map<string, sf::Texture> digitTextures;
-//    loadDigitTextures(digitTextures);
 
     unordered_map<string, sf::Sprite> digitSprites;
-    sf::Sprite negSign(TextureManager::GetTexture("digits"));
-//    sf::Sprite digitOne(digitTextures["one"]);
-//        digitOne.setPosition(width - width + 32, height - 100);
-    sf::IntRect rectNegSign(208, 0, 32, 32);
-    negSign.setTextureRect(rectNegSign);
-    negSign.setPosition(width - width, height - 100);
-    digitSprites["-"] = negSign;
+    loadDigits(digitSprites, width, height);
 
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
@@ -309,15 +301,8 @@ int main(){
         window.draw(SmileyFaceButton);
 
         // Draw Counter
-//        sf::Sprite negSign(digitTextures["-"]);
-//        sf::Sprite digitOne(digitTextures["one"]);
-//        digitOne.setPosition(width - width + 32, height - 100);
-//        sf::IntRect rectNegSign(208, 0, 32, 32);
-//        negSign.setTextureRect(rectNegSign);
-//
-//        negSign.setPosition(width - width, height - 100);
-//        window.draw(negSign);
-        window.draw(digitSprites["-"]);
+        window.draw(digitSprites["0"]);
+        window.draw(digitSprites["1"]);
 
         // Check Game Loss
         if(gameOver){
@@ -405,10 +390,51 @@ void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fi
     }
 }
 
-void loadDigitTextures(unordered_map<string, sf::Texture>& digitTextures){
+void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height){
     cout << "Loading Digit Textures" << endl;
-//    TextureManager::GetTexture("digits"));
-    digitTextures["one"].loadFromFile("images/digits.png");
-    digitTextures["-"].loadFromFile("images/digits.png");
+    // Hard Coded Values Based On Digits Texture - 231x32
+    // Rectangle Width is 21, due to 11 values
+    int rectWidth = 21;
+
+    // -
+    sf::Sprite negSign(TextureManager::GetTexture("digits"));
+    sf::IntRect rectNegSign(210, 0, rectWidth, 32);
+    negSign.setTextureRect(rectNegSign);
+    negSign.setPosition(width - width, height - 100);
+    digitSprites["-"] = negSign;
+
+    // 0
+    sf::Sprite zero(TextureManager::GetTexture("digits"));
+    sf::IntRect rectZero(0, 0, rectWidth, 32);
+    zero.setTextureRect(rectZero);
+    zero.setPosition(width - width, height - 100);
+    digitSprites["0"] = zero;
+
+    // 1
+    sf::Sprite one(TextureManager::GetTexture("digits"));
+    sf::IntRect rectOne(21, 0, 21, 32);
+    one.setTextureRect(rectOne);
+    one.setPosition(width - width + 16, height - 100);
+    digitSprites["1"] = one;
+
+    // 2
+    sf::Sprite two(TextureManager::GetTexture("digits"));
+    sf::IntRect rectTwo(42, 0, 21, 32);
+    two.setTextureRect(rectTwo);
+    two.setPosition(width - width + 16, height - 100);
+    digitSprites["2"] = two;
+
+    for(int i = 0; i < 10; i++){
+        cout << i << endl;
+        int xPos = width - width;
+        int yPos = height - 100;
+    }
+
+//    sf::Sprite INSERT(TextureManager::GetTexture("digits"));
+//    sf::IntRect RECTINSERT(21, 0, 21, 32);
+//    INSERT.setTextureRect(RECTINSERT);
+//    INSERT.setPosition(width - width + 16, height - 100);
+//    digitSprites["1"] = INSERT;
+
 
 }
