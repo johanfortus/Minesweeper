@@ -374,7 +374,9 @@ void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMin
         digitString = "00" + to_string(flaggedMines);
     else if(flaggedMines < 0 && flaggedMines > -10)
         digitString = "-00" + to_string(abs(flaggedMines));
-    else if(flaggedMines < -10)
+    else if(flaggedMines <= -100)
+        digitString = "-" + to_string(abs(flaggedMines));
+    else if(flaggedMines <= -10)
         digitString = "-0" + to_string(abs(flaggedMines));
     else if(flaggedMines >= 100)
         digitString = to_string(flaggedMines);
