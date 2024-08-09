@@ -12,13 +12,13 @@
 using namespace std;
 
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
-void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
+void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, const string& fileName);
 void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height);
 void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height);
 void setMenuBtnPos(sf::Sprite& faceWin, sf::Sprite& faceLose, sf::Sprite& faceHappy, sf::Sprite& debug, sf::Sprite& testOne, sf::Sprite& testTwo, sf::Sprite& testThree, int width, int height);
 
 int main(){
-    ifstream inFile("config.cfg");
+    ifstream inFile("boards/config.cfg");
     string lineFromFile;
 
     int columns;
@@ -106,15 +106,14 @@ int main(){
                     bool testThreeClicked = event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
 
                     if(testOneClicked || testTwoClicked || testThreeClicked){
-                        cout << "A Test Button Has Been Clicked" << endl;
                         string testFile;
 
                         if(testOneClicked)
-                            testFile = "testboard1.brd";
+                            testFile = "boards/testboard1.brd";
                         else if(testTwoClicked)
-                            testFile = "testboard2.brd";
+                            testFile = "boards/testboard2.brd";
                         else if(testThreeClicked)
-                            testFile = "testboard3.brd";
+                            testFile = "boards/testboard3.brd";
 
                         gameOver = false;
                         gameWon = false;
@@ -326,7 +325,7 @@ void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>&
     revealBlankTiles(i - 1, j - 1, columns, rows, boardVector); // TOP LEFT
 }
 
-void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName){
+void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, const string& fileName){
     ifstream testFile(fileName);
     string line;
     mineCount = 0;
