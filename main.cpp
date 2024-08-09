@@ -84,7 +84,7 @@ int main(){
                     }
                 }
             }
-            
+
             /*=== TEST BUTTONS FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
@@ -366,7 +366,7 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
 // Draw Counter - Change xPos while checking string flag count index
 void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height) {
     string digitString;
-    if(flaggedMines < 100 && flaggedMines > 10)
+    if(flaggedMines < 100 && flaggedMines >= 10)
         digitString = "0" + to_string(flaggedMines);
     else if(flaggedMines < 10 && flaggedMines >= 0)
         digitString = "00" + to_string(flaggedMines);
