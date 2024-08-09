@@ -15,6 +15,7 @@ void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>&
 void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
 void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height);
 void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height);
+void setMenuBtnPos(sf::Sprite& faceWin, sf::Sprite& faceLose, sf::Sprite& faceHappy, sf::Sprite& debug, sf::Sprite& testOne, sf::Sprite& testTwo, sf::Sprite& testThree, int width, int height);
 
 int main(){
     ifstream inFile("config.cfg");
@@ -29,7 +30,6 @@ int main(){
     int height;
     inFile >> rows;
     height = (rows * 32) + 100;
-
 
     int mineCount;
     inFile >> mineCount;
@@ -46,21 +46,21 @@ int main(){
 
     // Bottom Menu Buttons - height set to minus 100 instead of height minus 96 (32*3) bc it looks slightly better
     // Hard Coded values are based on the button size (64x64)
-    sf::Vector2f smileyFaceBtnPos(width/2 - 32, height - 100);
-    sf::Vector2f debugBtnPos(width - 256, height - 100);
-    sf::Vector2f testOneBtnPos(width - 192, height - 100);
-    sf::Vector2f testTwoBtnPos(width - 128, height - 100);
-    sf::Vector2f testThreeBtnPos(width - 64, height - 100);
-
+    sf::Sprite testThreeBtn(TextureManager::GetTexture("test_3"));
+    sf::Sprite testTwoBtn(TextureManager::GetTexture("test_2"));
+    sf::Sprite testOneBtn(TextureManager::GetTexture("test_1"));
+    sf::Sprite debugBtn(TextureManager::GetTexture("debug"));
+    sf::Sprite SmileyFaceBtn(TextureManager::GetTexture("face_happy"));
+    sf::Sprite SadFaceBtn(TextureManager::GetTexture("face_lose"));
+    sf::Sprite WinningFaceBtn(TextureManager::GetTexture("face_win"));
+    setMenuBtnPos(WinningFaceBtn, SadFaceBtn, SmileyFaceBtn, debugBtn, testOneBtn, testTwoBtn, testThreeBtn, width, height);
 
     Board board(columns, rows, mineCount);
     board.CountAdjacentMines();
     vector<vector<Tile>> boardVector = board.GetBoardVector();
 
-
     unordered_map<string, sf::Sprite> digitSprites;
     loadDigits(digitSprites, width, height);
-
 
     sf::RenderWindow window(sf::VideoMode(width, height), "Minesweeper");
 
@@ -124,9 +124,7 @@ int main(){
                         board.CountAdjacentMines();
                         boardVector = board.GetBoardVector();
 
-                        sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
-                        SmileyFaceButton.setPosition(smileyFaceBtnPos);
-                        window.draw(SmileyFaceButton);
+                        window.draw(SmileyFaceBtn);
                     }
                 }
             }
@@ -254,46 +252,31 @@ int main(){
         }
 
         // Draw Test #3 Button
-        sf::Sprite testThreeBtn(TextureManager::GetTexture("test_3"));
-        testThreeBtn.setPosition(testThreeBtnPos);
         window.draw(testThreeBtn);
 
         // Draw Test #2 Button
-        sf::Sprite testTwoBtn(TextureManager::GetTexture("test_2"));
-        testTwoBtn.setPosition(testTwoBtnPos);
         window.draw(testTwoBtn);
 
         // Draw Test #1 Button
-        sf::Sprite testOneBtn(TextureManager::GetTexture("test_1"));
-        testOneBtn.setPosition(testOneBtnPos);
         window.draw(testOneBtn);
 
         // Draw Debug Button
-        sf::Sprite debugBtn(TextureManager::GetTexture("debug"));
-        debugBtn.setPosition(debugBtnPos);
         window.draw(debugBtn);
 
         // Draw Smiley Face Button
-        sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
-        SmileyFaceButton.setPosition(smileyFaceBtnPos);
-        window.draw(SmileyFaceButton);
+        window.draw(SmileyFaceBtn);
 
         // Draw Counter
         drawCounter(digitSprites, flaggedMines, window, width, height);
 
         // Check Game Loss
-        if(gameOver){
-            sf::Sprite SadFaceButton(TextureManager::GetTexture("face_lose"));
-            SadFaceButton.setPosition(smileyFaceBtnPos);
-            window.draw(SadFaceButton);
-        }
+        if(gameOver)
+            window.draw(SadFaceBtn);
 
         // Check Game Won - If revealed tiles amount matches tileCount minus mineCount
-        if(gameWon){
-            sf::Sprite WinningFaceButton(TextureManager::GetTexture("face_win"));
-            WinningFaceButton.setPosition(sf::Vector2f(width/2 - 32, height - 100));
-            window.draw(WinningFaceButton);
-        }
+        if(gameWon)
+            window.draw(WinningFaceBtn);
+
         int revealedTileCount = 0;
         for(int i = 0; i < boardVector.size(); i++){
             for(int j = 0; j < boardVector[i].size(); j++) {
@@ -301,14 +284,12 @@ int main(){
                     revealedTileCount++;
             }
         }
-        if(revealedTileCount == tileCount - mineCount){
+        if(revealedTileCount == tileCount - mineCount)
             gameWon = true;
-        }
 
         window.display();
     }
     TextureManager::Clear();
-
     return 0;
 }
 
@@ -384,7 +365,6 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
     }
 }
 
-
 // Draw Counter - Change xPos while checking string flag count index
 void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height) {
     string digitString;
@@ -414,4 +394,15 @@ void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMin
         window.draw(digit);
         xPos+=21;
     }
+}
+
+// Set Bottom Menu Button Sprite Positions
+void setMenuBtnPos(sf::Sprite& faceWin, sf::Sprite& faceLose, sf::Sprite& faceHappy, sf::Sprite& debug, sf::Sprite& testOne, sf::Sprite& testTwo, sf::Sprite& testThree, int width, int height) {
+    faceWin.setPosition(sf::Vector2f(width / 2 - 32, height - 100));
+    faceLose.setPosition(sf::Vector2f(width / 2 - 32, height - 100));
+    faceHappy.setPosition(sf::Vector2f(width / 2 - 32, height - 100));
+    debug.setPosition(sf::Vector2f(width - 256, height - 100));
+    testOne.setPosition(sf::Vector2f(width - 192, height - 100));
+    testTwo.setPosition(sf::Vector2f(width - 128, height - 100));
+    testThree.setPosition(sf::Vector2f(width - 64, height - 100));
 }

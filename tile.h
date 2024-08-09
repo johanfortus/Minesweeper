@@ -22,21 +22,17 @@ class Tile {
     bool revealed = false;
     bool flagged = false;
     bool numbered = false;
+
 public:
     Tile(int i, int j);
+
     string GetTileData();
-    void SetTileData(string newTileData);
-
     bool GetMineStatus();
-    void SetMineStatus(bool mineStatus);
-
     bool GetRevealStatus();
-    void SetRevealStatus(bool revealStatus);
-
     bool GetFlaggedStatus();
+
+    void SetTileData(string newTileData);
+    void SetMineStatus(bool mineStatus);
+    void SetRevealStatus(bool revealStatus);
     void SetFlaggedStatus(bool flaggedStatus);
-
-
-
-    sf::Sprite& GetSprite();
 };
