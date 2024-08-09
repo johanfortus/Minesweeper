@@ -274,8 +274,10 @@ int main(){
             window.draw(SadFaceBtn);
 
         // Check Game Won - If revealed tiles amount matches tileCount minus mineCount
-        if(gameWon)
+        if(gameWon) {
             window.draw(WinningFaceBtn);
+            drawCounter(digitSprites, 0, window, width, height);
+        }
 
         int revealedTileCount = 0;
         for(int i = 0; i < boardVector.size(); i++){
