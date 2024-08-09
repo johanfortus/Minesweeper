@@ -84,19 +84,7 @@ int main(){
                     }
                 }
             }
-
-            /*=== DEBUG BUTTON FUNCTIONALITY ===*/
-            if(event.type == sf::Event::MouseButtonPressed) {
-                if(event.mouseButton.button == sf::Mouse::Left){
-                    if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        if(debugMode)
-                            debugMode = false;
-                        else
-                            debugMode = true;
-                    }
-                }
-            }
-
+            
             /*=== TEST BUTTONS FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
@@ -136,6 +124,15 @@ int main(){
 
                         /* === LEFT CLICK === */
                         if(event.mouseButton.button == sf::Mouse::Left) {
+
+                            // Toggle Debug Mode
+                            if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                                if(debugMode)
+                                    debugMode = false;
+                                else
+                                    debugMode = true;
+                            }
+
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
