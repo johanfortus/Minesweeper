@@ -164,13 +164,15 @@ int main(){
                             j = floor(event.mouseButton.x / 32);
 
                             // Right Click - Flag Tile (boardVector[i][j]) if not flagged or unflag if flagged
-                            if(!boardVector[i][j].GetFlaggedStatus()){
-                                boardVector[i][j].SetFlaggedStatus(true);
-                                flaggedMines--;
-                            }
-                            else{
-                                boardVector[i][j].SetFlaggedStatus(false);
-                                flaggedMines++;
+                            if(!boardVector[i][j].GetRevealStatus()) {
+                                if(!boardVector[i][j].GetFlaggedStatus()){
+                                    boardVector[i][j].SetFlaggedStatus(true);
+                                    flaggedMines--;
+                                }
+                                else{
+                                    boardVector[i][j].SetFlaggedStatus(false);
+                                    flaggedMines++;
+                                }
                             }
                         }
                         break;
