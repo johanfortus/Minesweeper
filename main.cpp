@@ -100,22 +100,25 @@ int main(){
             /*=== TEST BUTTONS FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
-                    bool testOneButtonPos = event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
-                    bool testTwoButtonPos = event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
-                    bool testThreeButtonPos = event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
-                    if(testOneButtonPos || testTwoButtonPos || testThreeButtonPos){
+
+                    bool testOneClicked = event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
+                    bool testTwoClicked = event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
+                    bool testThreeClicked = event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
+
+                    if(testOneClicked || testTwoClicked || testThreeClicked){
                         cout << "A Test Button Has Been Clicked" << endl;
-                    }
-//                    if((event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36) ||
-//                       (event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36) ||
-//                       (event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36)){
-//                        cout << "test buttons have been clicked" << endl;
-//                    }
-                    // Test One Button
-                    if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        testFileLayout(boardVector, mineCount, "testboard1.brd");
+                        string testFile;
+
+                        if(testOneClicked)
+                            testFile = "testboard1.brd";
+                        else if(testTwoClicked)
+                            testFile = "testboard2.brd";
+                        else if(testThreeClicked)
+                            testFile = "testboard3.brd";
+
                         gameOver = false;
                         gameWon = false;
+                        testFileLayout(boardVector, mineCount, testFile);
                         flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
@@ -124,32 +127,6 @@ int main(){
                         sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
                         SmileyFaceButton.setPosition(smileyFaceBtnPos);
                         window.draw(SmileyFaceButton);
-                    }
-
-                    // Test Two Button
-                    else if(event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        gameOver = false;
-                        gameWon = false;
-                        testFileLayout(boardVector, mineCount, "testboard2.brd");
-                        flaggedMines = mineCount;
-                        board.UpdateBoard(boardVector);
-                        board.CountAdjacentMines();
-                        boardVector = board.GetBoardVector();
-
-                        sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
-                        SmileyFaceButton.setPosition(smileyFaceBtnPos);
-                        window.draw(SmileyFaceButton);
-                    }
-
-                    // Test Three Button
-                    else if(event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        gameOver = false;
-                        gameWon = false;
-                        testFileLayout(boardVector, mineCount, "testboard3.brd");
-                        flaggedMines = mineCount;
-                        board.UpdateBoard(boardVector);
-                        board.CountAdjacentMines();
-                        boardVector = board.GetBoardVector();
                     }
                 }
             }
