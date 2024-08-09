@@ -15,7 +15,7 @@ using namespace std;
 void revealBlankTiles(int i, int j, int columns, int rows, vector<vector<Tile>>& boardVector);
 void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fileName);
 void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int height);
-void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window);
+void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height);
 
 int main(){
     ifstream inFile("config.cfg");
@@ -308,7 +308,7 @@ int main(){
         window.draw(SmileyFaceButton);
 
         // Draw Counter
-        drawCounter(digitSprites, flaggedMines, window);
+        drawCounter(digitSprites, flaggedMines, window, width, height);
 
         // Check Game Loss
         if(gameOver){
@@ -415,23 +415,42 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
 }
 
 // CHANGE X POSITION WHILE CHECKING STRING FLAG COUNT INDEX
-void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window) {
+void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height) {
     string digitString;
-    if(flaggedMines < 100){
+
+
+    if(flaggedMines < 100 && flaggedMines > 10)
         digitString = "0" + to_string(flaggedMines);
-    }
+    else if(flaggedMines < 10 && flaggedMines >= 0)
+        digitString = "00" + to_string(flaggedMines);
+    else if(flaggedMines < 0 && flaggedMines > -10)
+        digitString = "-00" + to_string(abs(flaggedMines));
+    else if(flaggedMines < -10)
+        digitString = "-0" + to_string(abs(flaggedMines));
+    else if(flaggedMines >= 100)
+        digitString = to_string(flaggedMines);
+
     cout << "Digit String: " << digitString << endl;
-    window.draw(digitSprites["6"]);
-//    cout << to_string(flaggedMines).size() << endl;
-}
 
-//cout << "Loading Digit Textures" << endl;
-// Hard Coded Values Based On Digits Texture - 231x32
-// Rectangle Width is 21, due to 11 values
-//int rectWidth = 21;
-//int rectLeft = 0;
+    int iterationAmount;
+    int xPos = width - width;
+    int yPos = height - 100;
+    if(flaggedMines >= 0){
+        iterationAmount = 3;
+    }
+    else if(flaggedMines < 0){
+        iterationAmount = 4;
+    }
+    for(unsigned int i = 0; i < iterationAmount; i++) {
+        string key(1, digitString[i]);
+        cout << "Key: " << key << endl;
+        sf::Sprite digit = digitSprites[key];
+        digit.setPosition(xPos, yPos);
+        window.draw(digit);
+        xPos+=21;
+    }
 
-// -
+    // -
 //    sf::Sprite negSign(TextureManager::GetTexture("digits"));
 //    sf::IntRect rectNegSign(210, 0, rectWidth, 32);
 //    negSign.setTextureRect(rectNegSign);
@@ -451,6 +470,18 @@ void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMin
 //    one.setTextureRect(rectOne);
 //    one.setPosition(width - width + 16, height - 100);
 //    digitSprites["1"] = one;
+
+
+//    cout << to_string(flaggedMines).size() << endl;
+}
+
+//cout << "Loading Digit Textures" << endl;
+// Hard Coded Values Based On Digits Texture - 231x32
+// Rectangle Width is 21, due to 11 values
+//int rectWidth = 21;
+//int rectLeft = 0;
+
+
 
 //int num = -4;
 //string stringNum = to_string(num);
