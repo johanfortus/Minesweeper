@@ -78,7 +78,6 @@ int main(){
                         flaggedMines = mineCount;
                         Board board(columns, rows, mineCount);
                         board.CountAdjacentMines();
-                        board.PrintBoard();
                         boardVector = board.GetBoardVector();
                         gameOver = false;
                         gameWon = false;
@@ -101,16 +100,25 @@ int main(){
             /*=== TEST BUTTONS FUNCTIONALITY ===*/
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
-
+                    bool testOneButtonPos = event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
+                    bool testTwoButtonPos = event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
+                    bool testThreeButtonPos = event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36;
+                    if(testOneButtonPos || testTwoButtonPos || testThreeButtonPos){
+                        cout << "A Test Button Has Been Clicked" << endl;
+                    }
+//                    if((event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36) ||
+//                       (event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36) ||
+//                       (event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36)){
+//                        cout << "test buttons have been clicked" << endl;
+//                    }
                     // Test One Button
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
+                        testFileLayout(boardVector, mineCount, "testboard1.brd");
                         gameOver = false;
                         gameWon = false;
-                        testFileLayout(boardVector, mineCount, "testboard1.brd");
                         flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
-                        board.PrintBoard();
                         boardVector = board.GetBoardVector();
 
                         sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
@@ -126,7 +134,6 @@ int main(){
                         flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
-                        board.PrintBoard();
                         boardVector = board.GetBoardVector();
 
                         sf::Sprite SmileyFaceButton(TextureManager::GetTexture("face_happy"));
@@ -142,7 +149,6 @@ int main(){
                         flaggedMines = mineCount;
                         board.UpdateBoard(boardVector);
                         board.CountAdjacentMines();
-                        board.PrintBoard();
                         boardVector = board.GetBoardVector();
                     }
                 }
