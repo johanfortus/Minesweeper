@@ -12,25 +12,12 @@ using namespace std;
 
 Tile::Tile(int i, int j) {
     tileData = "•";
-
-
     rowPos = i;
     columnPos = j;
-
 }
-
 string Tile::GetTileData() {
     return tileData;
 }
-
-void Tile::SetTileData(string newTileData) {
-    tileData = newTileData;
-}
-
-
-
-
-
 bool Tile::GetMineStatus() {
     return mine;
 }
@@ -41,6 +28,9 @@ bool Tile::GetFlaggedStatus() {
     return flagged;
 }
 
+void Tile::SetTileData(string newTileData) {
+    tileData = newTileData;
+}
 void Tile::SetMineStatus(bool mineStatus) {
     mine = mineStatus;
 }
@@ -50,12 +40,3 @@ void Tile::SetRevealStatus(bool revealStatus) {
 void Tile::SetFlaggedStatus(bool flaggedStatus) {
     flagged = flaggedStatus;
 }
-
-
-
-
-
-
-//sf::Sprite& Tile::GetSprite() {
-//    return TileSprite;
-//}

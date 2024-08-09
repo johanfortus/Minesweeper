@@ -1,11 +1,6 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include <string>
 #include <unordered_map>
-#include <cmath>
 #include "texturemanager.h"
 using namespace std;
 
@@ -13,11 +8,7 @@ unordered_map<string, sf::Texture> TextureManager::textures;
 
 void TextureManager::LoadTexture(string fileName) {
     string path = "images/" + fileName + ".png";
-//    cout << path << endl;
     textures[fileName].loadFromFile(path);
-
-    // fileName == space
-    // path == images/space.png
 }
 
 sf::Texture& TextureManager::GetTexture(string textureName){

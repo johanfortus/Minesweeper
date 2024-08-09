@@ -1,11 +1,7 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
-#include <map>
-#include <cmath>
 #include "board.h"
 #include "random.h"
 #include "tile.h"
@@ -36,9 +32,7 @@ Board::Board(int columnAmount, int rowAmount, int mineAmount) {
         else{
             continue;
         }
-        /*cout << "[" << randomRow << "]" << "[" << randomCol << "]" << endl;*/
     }
-    /*cout << endl;*/
 }
 
 // Printing Board Out
@@ -179,11 +173,9 @@ void Board::CountAdjacentMines() {
                     if(boardVector[i - 1][j + 1].GetTileData() == "B") // Top Right
                         bombCount++;
                 }
-//                if(bombCount > 0)
                 boardVector[i][j].SetTileData(to_string(bombCount));
             }
         }
-//        cout << endl;
     }
 }
 

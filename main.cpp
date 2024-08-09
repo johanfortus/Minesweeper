@@ -6,7 +6,6 @@
 #include <string>
 #include <unordered_map>
 #include <cmath>
-#include "random.h"
 #include "texturemanager.h"
 #include "board.h"
 #include "tile.h"
@@ -30,7 +29,7 @@ int main(){
     int height;
     inFile >> rows;
     height = (rows * 32) + 100;
-    cout << "Width: " << width << ", Height: " << height << endl;
+
 
     int mineCount;
     inFile >> mineCount;
@@ -56,7 +55,6 @@ int main(){
 
     Board board(columns, rows, mineCount);
     board.CountAdjacentMines();
-//    board.PrintBoard();
     vector<vector<Tile>> boardVector = board.GetBoardVector();
 
 
@@ -84,7 +82,6 @@ int main(){
                         boardVector = board.GetBoardVector();
                         gameOver = false;
                         gameWon = false;
-                        cout << "Restart Successful" << endl;
                     }
                 }
             }
@@ -93,7 +90,6 @@ int main(){
             if(event.type == sf::Event::MouseButtonPressed) {
                 if(event.mouseButton.button == sf::Mouse::Left){
                     if(event.mouseButton.x >= width - 256 && event.mouseButton.x <= width - 256 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        cout << "DEBUG BUTTON CLICKED" << endl;
                         if(debugMode)
                             debugMode = false;
                         else
@@ -108,7 +104,6 @@ int main(){
 
                     // Test One Button
                     if(event.mouseButton.x >= width - 192 && event.mouseButton.x <= width - 192 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        cout << "TEST ONE BUTTON CLICKED" << endl;
                         gameOver = false;
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard1.brd");
@@ -125,7 +120,6 @@ int main(){
 
                     // Test Two Button
                     else if(event.mouseButton.x >= width - 128 && event.mouseButton.x <= width - 128 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        cout << "TEST TWO BUTTON CLICKED" << endl;
                         gameOver = false;
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard2.brd");
@@ -142,7 +136,6 @@ int main(){
 
                     // Test Three Button
                     else if(event.mouseButton.x >= width - 64 && event.mouseButton.x <= width - 64 + 64 && event.mouseButton.y >= height - 100 && event.mouseButton.y <= height - 36){
-                        cout << "TEST THREE BUTTON CLICKED" << endl;
                         gameOver = false;
                         gameWon = false;
                         testFileLayout(boardVector, mineCount, "testboard3.brd");
@@ -163,8 +156,6 @@ int main(){
 
                         /* === LEFT CLICK === */
                         if(event.mouseButton.button == sf::Mouse::Left) {
-                            cout << "X: " << event.mouseButton.x << " Y: " << event.mouseButton.y << endl;
-                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
@@ -192,7 +183,6 @@ int main(){
 
                         /* === RIGHT CLICK === */
                         else if(event.mouseButton.button == sf::Mouse::Right) {
-//                            cout << "[" << floor(event.mouseButton.y / 32) << "][" << floor(event.mouseButton.x / 32) << "]" << endl;
                             i = floor(event.mouseButton.y / 32);
                             j = floor(event.mouseButton.x / 32);
 
@@ -200,12 +190,10 @@ int main(){
                             if(!boardVector[i][j].GetFlaggedStatus()){
                                 boardVector[i][j].SetFlaggedStatus(true);
                                 flaggedMines--;
-                                cout << flaggedMines << endl;
                             }
                             else{
                                 boardVector[i][j].SetFlaggedStatus(false);
                                 flaggedMines++;
-                                cout << flaggedMines << endl;
                             }
                         }
                         break;
@@ -381,7 +369,6 @@ void testFileLayout(vector<vector<Tile>>& boardVector, int& mineCount, string fi
         if(getline(testFile, line)){
             for(unsigned int j = 0; j < boardVector[i].size(); j++){
                 if(line[j] == '1'){
-                    cout << "row[j] is 1" << endl;
                     boardVector[i][j].SetTileData("B");
                     boardVector[i][j].SetMineStatus(true);
                     mineCount++;
@@ -414,11 +401,10 @@ void loadDigits(unordered_map<string, sf::Sprite>& digitSprites, int width, int 
     }
 }
 
-// CHANGE X POSITION WHILE CHECKING STRING FLAG COUNT INDEX
+
+// Draw Counter - Change xPos while checking string flag count index
 void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMines, sf::RenderWindow& window, int width, int height) {
     string digitString;
-
-
     if(flaggedMines < 100 && flaggedMines > 10)
         digitString = "0" + to_string(flaggedMines);
     else if(flaggedMines < 10 && flaggedMines >= 0)
@@ -430,59 +416,19 @@ void drawCounter(unordered_map<string, sf::Sprite>& digitSprites, int flaggedMin
     else if(flaggedMines >= 100)
         digitString = to_string(flaggedMines);
 
-    cout << "Digit String: " << digitString << endl;
-
     int iterationAmount;
     int xPos = width - width;
     int yPos = height - 100;
-    if(flaggedMines >= 0){
+    if(flaggedMines >= 0)
         iterationAmount = 3;
-    }
-    else if(flaggedMines < 0){
+    else if(flaggedMines < 0)
         iterationAmount = 4;
-    }
+
     for(unsigned int i = 0; i < iterationAmount; i++) {
         string key(1, digitString[i]);
-        cout << "Key: " << key << endl;
         sf::Sprite digit = digitSprites[key];
         digit.setPosition(xPos, yPos);
         window.draw(digit);
         xPos+=21;
     }
-
-    // -
-//    sf::Sprite negSign(TextureManager::GetTexture("digits"));
-//    sf::IntRect rectNegSign(210, 0, rectWidth, 32);
-//    negSign.setTextureRect(rectNegSign);
-//    negSign.setPosition(width - width, height - 100);
-//    digitSprites["-"] = negSign;
-
-// 0
-//    sf::Sprite zero(TextureManager::GetTexture("digits"));
-//    sf::IntRect rectZero(0, 0, rectWidth, 32);
-//    zero.setTextureRect(rectZero);
-//    zero.setPosition(width - width, height - 100);
-//    digitSprites["0"] = zero;
-
-// 1
-//    sf::Sprite one(TextureManager::GetTexture("digits"));
-//    sf::IntRect rectOne(21, 0, 21, 32);
-//    one.setTextureRect(rectOne);
-//    one.setPosition(width - width + 16, height - 100);
-//    digitSprites["1"] = one;
-
-
-//    cout << to_string(flaggedMines).size() << endl;
 }
-
-//cout << "Loading Digit Textures" << endl;
-// Hard Coded Values Based On Digits Texture - 231x32
-// Rectangle Width is 21, due to 11 values
-//int rectWidth = 21;
-//int rectLeft = 0;
-
-
-
-//int num = -4;
-//string stringNum = to_string(num);
-//cout << stringNum[0] << endl;
